@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# check for updates
+aur=$(yay -a -Qu | wc -l)
+core=$(pacman -Qu | wc -l)
+
+# total
+total=$(expr $aur + $core)
+
+# notification
+if [ $total -eq 0 ] ; then
+    echo " Packages are up to date"
+else
+    echo "󱓽 Official $core 󱓾 AUR $aur"
+fi

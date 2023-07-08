@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# script picks a colour using hyprpicker and notifies user with it's hex
+# interpretation and little square coloured in given hue
+
+hex=''
+tmp=''
+
+# pick the colour and create nice path in /temp for the little image
+pick() {
+  hyprpicker -a -n &> /dev/null
+  hex="$(wl-paste)"
+  tmp=/tmp/color_$hex.png
+}
+
+# create little image at $tmp and attach it to the notification
+notify() {
+  convert -size 64x64 xc:"$hex" "$tmp"
+  notify-send -a 'colorpicker' -i "$tmp" 'colour picked:' "$hex"
+}
+
+pick
+notify
