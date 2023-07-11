@@ -20,6 +20,10 @@ hypr_colors() {
   echo "wrote hyprland color configuration to $conf_path"
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> af3d5ed (hypr: basic colour scheme generation)
 # check if there is at least one argument
 if [[ "$#" -le 0 && "$#" -gt 2 ]]; then
   echo "usage: $0 <image_path> <theme>"
@@ -49,7 +53,10 @@ else
 fi
 
 wal -i "$image_path" $theme_param -n -t -s -e -q
+<<<<<<< HEAD
 echo $image_path
+=======
+>>>>>>> af3d5ed (hypr: basic colour scheme generation)
 generated_theme=$(cat ~/.cache/wal/colors.json | jq -c -M)
 image_name=$(basename -s "${image_path#*.}" "$image_path")
 
