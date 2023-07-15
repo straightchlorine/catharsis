@@ -1,0 +1,27 @@
+format='$all$directory$git_branch$character'
+right_format = '$git_status$cmd_duration'
+continuation_prompt = '▶▶'
+add_newline = true
+
+[character]
+success_symbol = '[ ](bold fg:#b8bb26)'
+error_symbol = '[ ](bold fg:#ff0000)'
+vicmd_symbol = '[ ](bold fg:#ffffff)'
+
+[directory]
+format = '($style)[  ](bg:none fg:foreground)[$path](bg:none fg:foreground bold)($style)'
+style = 'bg:none fg:base'
+truncation_length = 3
+truncate_to_repo=false
+
+[git_branch]
+format = '[ on  (bg:none fg:foreground bold)$branch](bg:none fg:foreground)($style)'
+style = 'bg:none fg:base'
+
+[git_status]
+format = '($style)[$all_status$ahead_behind ](bg:none fg:green)($style)'
+
+[cmd_duration]
+min_time = 1
+format = '($style)[[  󱦟](bg:none fg:yellow)$duration](bg:none fg:f9f5d7)'
+disabled = false
