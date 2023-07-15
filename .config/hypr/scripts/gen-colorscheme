@@ -49,7 +49,6 @@ else
 fi
 
 wal -i "$image_path" $theme_param -n -t -s -e -q
-echo $image_path
 generated_theme=$(cat ~/.cache/wal/colors.json | jq -c -M)
 image_name=$(basename -s "${image_path#*.}" "$image_path")
 
