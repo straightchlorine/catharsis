@@ -3,6 +3,7 @@ autoload -Uz _zinit
 
 
 source $ZDOTDIR/plugins.zsh
+source $ZDOTDIR/env.zsh
 
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate

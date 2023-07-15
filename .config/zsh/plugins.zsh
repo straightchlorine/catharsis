@@ -22,9 +22,9 @@ zinit light-mode for \
   zdharma-continuum/zinit-annex-as-monitor \
   zdharma-continuum/zinit-annex-bin-gem-node \
   zdharma-continuum/zinit-annex-patch-dl \
-  zdharma-continuum/zinit-annex-rust
+  zdharma-continuum/zinit-annex-rust \
   zdharma-continuum/fast-syntax-highlighting \
-- hlissner/zsh-autopair \
+  hlissner/zsh-autopair \
   MichaelAquilina/zsh-you-should-use \
   zsh-users/zsh-autosuggestions \
   Aloxaf/fzf-tab
