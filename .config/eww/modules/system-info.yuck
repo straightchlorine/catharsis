@@ -1,0 +1,42 @@
+(defwidget system-info []
+  (centerbox
+    :class 'system-info'
+    (cpu-info)
+    (ram-info)
+    (disk-info)
+  )
+)
+
+(defwidget cpu-info []
+  (box
+    :class 'cpu-wrapper'
+    (label
+      :class 'cpu'
+      :valign 'center'
+      :text "${sys-cpu}"
+    )
+  )
+)
+
+(defwidget ram-info []
+  (box
+    :class 'ram-wrapper'
+    (label
+      :class 'ram'
+      :valign 'center'
+      :text "${sys-ram}"
+    )
+  )
+)
+
+(defwidget disk-info []
+  (box
+    :class 'disk-wrapper'
+    (for disk in sys-disk
+        (label
+          :class 'disk' :valign 'center'
+          :text "${disk.usage}"
+        )
+      )
+  )
+)

@@ -1,0 +1,17 @@
+(defwidget network-info []
+  (box
+    :class 'network-info'
+    :space-evenly false
+    :orientation 'v'
+      (box
+        :halign 'start'
+        :class 'network-rx'
+        (label :text {sys-net.rx.ratestring})
+      )
+      (box
+        :halign 'start'
+        :class 'network-tx'
+        (label :text {sys-net.tx.ratestring})
+      )
+  )
+)

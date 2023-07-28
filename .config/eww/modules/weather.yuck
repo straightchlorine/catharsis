@@ -1,0 +1,11 @@
+(defwidget weather []
+  (box :class 'weather-wrapper'
+    (box :class 'weather'
+        :space-evenly false
+        :halign 'center'
+        :orientation 'h'
+      (label :class 'weathertemp' :halign 'start' :text '${weather-temperature}°C')
+      (label :class 'weathericon' :style 'color: ${weather-color};' :text '${weather-icon}')
+    )
+  )
+)
