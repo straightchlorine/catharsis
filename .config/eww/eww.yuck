@@ -7,17 +7,16 @@
 (include './modules/network.yuck')
 
 (defwindow bar
-  :stacking 'fg'
-  :wm-ignore true
   :monitor 0
+  :exclusive true
   :namespace 'bar'
-  :geometry (geometry :x '0%'
-                      :y '0%'
-                      :width '100%'
-                      :height '50px'
+  :stacking 'bottom'
+  :geometry (geometry :x '5px'
+                      :y '10px'
+                      :width '1882px'
+                      :height '45px'
                       :anchor 'top center'
   )
-  :exclusive false
   (bar)
 )
 
@@ -26,12 +25,12 @@
     :space-evenly false
     :orientation 'h'
     (box
-      :class 'bar-bg-only'
+      :class 'bar-background'
       :style 'margin-right: -${width - 9}px;'
     )
     (centerbox
-      :class 'bar-normal'
-      :width {width}
+      :class 'bar'
+      :width '1920px'
       (left)
       (center)
       (right)
