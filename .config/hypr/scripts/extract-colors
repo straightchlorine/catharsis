@@ -57,9 +57,38 @@ def write_kitty_conf(color_dictionary : dict [str, str]):
     with open(config_path, 'w') as kitty_colors:
         for k,v in color_dictionary.items():
             kitty_colors.write('{:<12}{:<12}'.format(k, v) + '\n')
-            print_opt(k, __get_colored_str_block(v))
+            print_opt(k, v)
 
     print(f'config written to {config_path}.')
+
+def gen_css(color_dictionary : dict [str, str]):
+    """
+        Writes given config into css colors file to $HOME/.config/eww/styles/_colors-<image-name>.scss.
+    """
+
+    # name of the provided image
+    image_name = Path(sys.argv[2]).stem
+
+    # name of the generated config file
+    css_name ='colors-' + image_name + '.scss'
+
+    # path to the new configuration file
+    css_path = Path.joinpath(
+        Path.home(),
+        '.config',
+        'eww',
+        'styles',
+        str(css_name)
+    )
+
+    print(f'writing generated colors as {css_name}...')
+
+    with open(css_path, 'w') as css_colors:
+        for k,v in color_dictionary.items():
+            css_colors.write('${:<12} : {:<7}'.format(k, v) + '\n')
+            print_opt(k, v)
+
+    print(f'config written to {css_path}.')
 
 def gen_kitty_conf(generated_colors):
     """
@@ -78,7 +107,8 @@ def gen_kitty_conf(generated_colors):
         color_number='color' + str(i - 1)
         conf[color_number] = generated_colors[i]
 
-    write_kitty_conf(conf)
+    #write_kitty_conf(conf)
+    gen_css(conf)
 
 def __rgb_to_hex(rgb_tuple):
     return "#{:02x}{:02x}{:02x}".format(rgb_tuple[0], rgb_tuple[1], rgb_tuple[2])
@@ -138,6 +168,8 @@ if __name__ == "__main__":
     if sys.argv[1] == '-g':
         extract_colors()
     elif sys.argv[1] == '-l':
+        list_colors()
+    elif sys.argv[1] == '-c':
         list_colors()
     else:
         print('usage: extract-colors [[-g] | [-l]] [file]')
