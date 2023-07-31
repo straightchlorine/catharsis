@@ -6,6 +6,43 @@ import colorgram
 from pathlib import Path
 from PIL import ImageColor
 
+class ExtractColors:
+    """
+        Extract 18 colors from the image.
+    """
+    # path to the image
+    image : Path
+
+    # lists containing colors in rgb and hex format
+    colors_rgb : list[tuple]
+    colors_hex : list[str]
+
+    def __init__(self, image : Path) -> None:
+        self.image = image
+        self.__extract_colors()
+
+    @staticmethod
+    def __rgb_to_hex(rgb : tuple[int, int, int]):
+        """
+            Convert rgb tuple into hex string.
+
+            :param rgb tuple
+            :return hex string
+        """
+        return "#{:02x}{:02x}{:02x}".format(rgb[0], rgb[1], rgb[2])
+
+    def __extract_colors(self):
+        """
+            Extract 18 most common colors from the image.
+        """
+        print(f'extracting colors from {self.image}...')
+        extracted_colors = colorgram.extract(self.image, 17)
+        print(f'colors extracted.') 
+        for color in extracted_colors:
+            self.colors_rgb.append(color.rgb)
+            self.colors_hex.append(ExtractColors.__rgb_to_hex(
+                                                        color.rgb))
+
 def __gen_colored_str_block(rgb_tuple):
     """
         Generates colored string using ANSI escape characters (four spaces).
