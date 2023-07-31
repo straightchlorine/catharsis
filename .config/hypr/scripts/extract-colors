@@ -108,6 +108,31 @@ class ParseColors:
         else:
             self.__parse_hex(colors)
 
+class Visualise:
+    """
+        Display generated colors and configs along with both names
+        and colors
+    """
+    @staticmethod
+    def __gen_colored_output(rgb : tuple[int, int, int]):
+        """
+            Generates colored string - four spaces with background
+            in desired color.
+        """
+        color_code = f"\033[48;2;{rgb[0]};{rgb[1]};{rgb[2]}m" 
+        reset_code = "\033[0m" 
+        return f'{color_code}    {reset_code}'
+
+    @staticmethod
+    def __print_entry(id : str, rgb : tuple[int, int, int]):
+        print('{:<12}{:<12}'.format(id, Visualise.__gen_colored_output(rgb)))
+
+    @staticmethod
+    def display_dict(rgb_colors : dict[str, tuple[int, int, int]]):
+        for id, rgb in rgb_colors.items():
+            Visualise.__print_entry(id, rgb)
+
+
 def __gen_colored_str_block(rgb_tuple):
     """
         Generates colored string using ANSI escape characters (four spaces).
