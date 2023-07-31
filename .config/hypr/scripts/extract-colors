@@ -1,6 +1,7 @@
 #!/home/goldberg/.venv/bin/python
 
 import sys
+import typing
 import colorgram
 
 from pathlib import Path
@@ -139,11 +140,10 @@ class Writer:
     """
         Writes desired colors to files in appropriate fashion.
     """
-
     def __init__(self, parsed_colors : ParseColors) -> None:
         self.parsed_colors = parsed_colors
 
-    def __kitty_config(self):
+    def kitty_config(self):
         """
             Generate kitty config in $HOME/.config/kitty/colors/
             colors-kitty-<image_name>.conf.
@@ -171,15 +171,13 @@ class Writer:
 
         print(f'[!!!] config written to {config_path}.')
 
-    def __css_style(self):
+    def css_style(self):
         """
             Generate css file $HOME/.config/eww/styles/colors-<image-name>.scss
             containing generated colors.
         """
         # name of the provided picture
-        image_name = self.parsed_colors.image.stem
-
-        # name of the generated config file
+        image_name = self.parsed_colors.image.stem # name of the generated config file
         css_name ='colors-' + image_name + '.scss'
 
         # path to the new configuration file
@@ -199,15 +197,52 @@ class Writer:
 
         print(f'[!!!] colors written to {css_path}.')
 
-
 class Reader:
     """
         Allows to read the colors from existing files and display
         them in color.
     """
 
+    kitty_colors : dict[str, str]
+    css_colors : dict[str, str]
+
     def __init__(self, parsed_colors : ParseColors) -> None:
         self.parsed_colors = parsed_colors
+
+    def __kitty_line_split(self, line : str) -> list[str]:
+        """
+            Retrieve information from single line of kitty config.
+
+            :param line single line from configuration file
+        """
+        # splitting using spaces (number of spaces is not constant,
+        # thus split is full of empty elements
+        line_split = line.split(' ')
+
+        # clearing said spaces
+        output = []
+        for s in line_split:
+            if s != '': output.append(s)
+
+        # new line symbols are left after the color
+        output[1] = output[1].replace('\n', '')
+
+        return output
+
+    def __kitty_parse_file(self, kitty_conf : typing.TextIO):
+        """
+            Parse kitty .conf file line by line.
+        """
+        for line in kitty_conf:
+            color = self.__kitty_line_split(line)
+            self.kitty_colors[color[0]] = color[1]
+
+    def kitty_config(self, kitty_config : Path):
+        with open(kitty_config, 'r') as kitty_conf:
+            self.__kitty_parse_file(kitty_conf)
+
+    def css_style(self):
+        pass
 
 
 class Colorscheme:
@@ -220,59 +255,3 @@ class Colorscheme:
 if __name__ == "__main__":
     colorscheme = Colorscheme()
     colorscheme.generate_colors()
-
-
-def __remove_redundant_splits(split, output):
-    for s in split:
-        if s != '':
-            output.append(s)
-    return output
-
-def __clean_split_list(split):
-    cleaned_split = []
-    cleaned_split = __remove_redundant_splits(split, cleaned_split)
-    cleaned_split[1] = cleaned_split[1].replace('\n', '')
-    return cleaned_split
-
-def __retrieve_data(line, conf):
-    """
-        Splipts the line of the config file by space, removes empty elements
-        and newline sequences.
-    """
-    split_line = line.split(' ')
-    clear_split = __clean_split_list(split_line)
-    conf[clear_split[0]] = clear_split[1]
-
-def __display_configuration(conf):
-    for k, v in conf.items():
-        print_opt(k, v)
-
-def list_colors():
-    """
-        In case user modifier the config manually, script reads the colors 
-        directly from given file on the drive after the parameter -l.
-    """
-    # config from the drive
-    conf = Path(sys.argv[2])
-
-    # retrieved data
-    retrieved_conf = {}
-
-    # reading data and properly parsing it into dictionary
-    with open(conf, 'r') as kitty_colors:
-        for line in kitty_colors:
-            __retrieve_data(line, retrieved_conf)
-
-    __display_configuration(retrieved_conf)
-
-# if __name__ == "__main__":
-#     if sys.argv[1] == '-g':
-#         extract_colors()
-#     elif sys.argv[1] == '-l':
-#         list_colors()
-#     elif sys.argv[1] == '-c':
-#         list_colors()
-#     else:
-#         print('usage: extract-colors [[-g] | [-l]] [file]')
-#         print('\t-g [file] generates most abundant colors in the given file (image) and writes them into kitty config (as a separate file).')
-#         print('\t-l [file] parses given color configuration for kitty terminal, and displays both the names and corresponding hue.')
