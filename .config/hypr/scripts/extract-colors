@@ -14,8 +14,8 @@ class ExtractColors:
     image : Path
 
     # lists containing colors in rgb and hex format
-    colors_rgb : list[tuple]
-    colors_hex : list[str]
+    colors_rgb : list[tuple] = []
+    colors_hex : list[str] = []
 
     def __init__(self, image : Path) -> None:
         self.image = image
@@ -39,7 +39,7 @@ class ExtractColors:
         extracted_colors = colorgram.extract(self.image, 17)
         print(f'colors extracted.')
         for color in extracted_colors:
-            self.colors_rgb.append(color.rgb)
+            self.colors_rgb.append(( color.rgb[0], color.rgb[1], color.rgb[2]))
             self.colors_hex.append(ExtractColors.__rgb_to_hex(
                                                         color.rgb))
 
@@ -133,29 +133,17 @@ class Visualise:
             Visualise.__print_entry(id, rgb)
 
 
-def __gen_colored_str_block(rgb_tuple):
-    """
-        Generates colored string using ANSI escape characters (four spaces).
-    """
-    color_code = f"\033[48;2;{rgb_tuple[0]};{rgb_tuple[1]};{rgb_tuple[2]}m" 
-    reset_code = "\033[0m" 
-    return f'{color_code}    {reset_code}'
+class Colorscheme:
+    parsecolors : ParseColors
 
-def __get_colored_str_block(hex : str):
-    """
-        Returns colored string in the color given by hex
-    """
-    return __gen_colored_str_block(ImageColor.getcolor(hex, 'RGB'))
+    def generate_colors(self):
+        self.parsecolors = ParseColors(sys.argv[1])
+        Visualise.display_dict(self.parsecolors.color_entries_rgb)
 
-def print_opt(k : str, v : str):
-    print('{:<12}{:<12}'.format(k, __get_colored_str_block(v)))
+if __name__ == "__main__":
+    colorscheme = Colorscheme()
+    colorscheme.generate_colors()
 
-
-def print_colored_block(rgb_tuple):
-    """
-        Prints four spaces with coloured background, using ANSI format.
-    """
-    print(__gen_colored_str_block(rgb_tuple))
 
 def write_kitty_conf(color_dictionary : dict [str, str]):
     """
@@ -291,14 +279,14 @@ def list_colors():
 
     __display_configuration(retrieved_conf)
 
-if __name__ == "__main__":
-    if sys.argv[1] == '-g':
-        extract_colors()
-    elif sys.argv[1] == '-l':
-        list_colors()
-    elif sys.argv[1] == '-c':
-        list_colors()
-    else:
-        print('usage: extract-colors [[-g] | [-l]] [file]')
-        print('\t-g [file] generates most abundant colors in the given file (image) and writes them into kitty config (as a separate file).')
-        print('\t-l [file] parses given color configuration for kitty terminal, and displays both the names and corresponding hue.')
+# if __name__ == "__main__":
+#     if sys.argv[1] == '-g':
+#         extract_colors()
+#     elif sys.argv[1] == '-l':
+#         list_colors()
+#     elif sys.argv[1] == '-c':
+#         list_colors()
+#     else:
+#         print('usage: extract-colors [[-g] | [-l]] [file]')
+#         print('\t-g [file] generates most abundant colors in the given file (image) and writes them into kitty config (as a separate file).')
+#         print('\t-l [file] parses given color configuration for kitty terminal, and displays both the names and corresponding hue.')
