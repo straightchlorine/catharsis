@@ -37,11 +37,76 @@ class ExtractColors:
         """
         print(f'extracting colors from {self.image}...')
         extracted_colors = colorgram.extract(self.image, 17)
-        print(f'colors extracted.') 
+        print(f'colors extracted.')
         for color in extracted_colors:
             self.colors_rgb.append(color.rgb)
             self.colors_hex.append(ExtractColors.__rgb_to_hex(
                                                         color.rgb))
+
+class ParseColors:
+    """
+        Parse colors lists into dictionary with key being
+        name of the colors and value the color itself.
+
+        eg. { background : #ffffff }
+    """
+    # path to the image
+    image : Path
+
+    # color extractor
+    extract_color : ExtractColors
+
+    # color dictionaries
+    color_entries_hex : dict[str, str]
+    color_entries_rgb : dict[str, tuple[int, int, int]]
+
+
+    def __init__(self, image) -> None:
+        self. image = image
+        extract_colors = ExtractColors(self.image)
+        self.__parse_colors(extract_colors.colors_hex)
+        self.__parse_colors(extract_colors.colors_rgb)
+
+    def __parse_rgb(self, colors : list):
+        """
+            Parses RGB colors into dictionary.
+        """
+        self.color_entries_rgb = { 'background' : colors[0],
+                                   'foreground' : colors[3],
+                                   'cursor'     : colors[3],
+                                   'color0'     : colors[0],
+                                   'color1'     : colors[1],
+                                   'color2'     : colors[2] }
+        # filling colors3-15
+        for i in range(4, 17):
+            color_number='color' + str(i - 1)
+            self.color_entries_rgb[color_number] = colors[i]
+
+    def __parse_hex(self, colors : list):
+        """
+            Parses RGB colors into dictionary.
+        """
+        self.color_entries_hex = { 'background' : colors[0],
+                                   'foreground' : colors[3],
+                                   'cursor'     : colors[3],
+                                   'color0'     : colors[0],
+                                   'color1'     : colors[1],
+                                   'color2'     : colors[2] }
+        # filling colors3-15
+        for i in range(4, 17):
+            color_number='color' + str(i - 1)
+            self.color_entries_hex[color_number] = colors[i]
+
+
+    def __parse_colors(self, colors : list):
+        """
+            Parses generated_colors into 3 special colors and 15 basic ones,
+            defining how terminal and programs within it look.
+        """
+        if type(colors[0]) is tuple:
+            self.__parse_rgb(colors)
+        else:
+            self.__parse_hex(colors)
 
 def __gen_colored_str_block(rgb_tuple):
     """
