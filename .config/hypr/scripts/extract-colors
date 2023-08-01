@@ -241,17 +241,50 @@ class Reader:
         with open(kitty_config, 'r') as kitty_conf:
             self.__kitty_parse_file(kitty_conf)
 
-    def css_style(self):
-        pass
+    def __css_line_split(self, line : str) -> list[str]:
+        """
+            Retrieve information from single line of css style config.
 
+            :param line single line from configuration file
+        """
+        # splitting the line according to css syntax $var : #color
+        line_split = line.split(':')
+
+        # clearing the trailing spaces
+        output = []
+        for s in line_split:
+            output.append(s.strip())
+
+        # new line symbols are left after the color
+        output[1] = output[1].replace('\n', '')
+
+        return output
+
+    def __css_parse_style(self, style : typing.TextIO):
+        """
+            Parse css .scss file line by line.
+        """
+        for line in style:
+            color = self.__css_line_split(line)
+            self.kitty_colors[color[0]] = color[1]
+
+    def css_style(self, css_style : Path):
+        with open(css_style, 'r') as style:
+            self.__css_parse_style(style)
 
 class Colorscheme:
     parsecolors : ParseColors
 
-    def generate_colors(self):
-        self.parsecolors = ParseColors(sys.argv[1])
+    def generate_colors(self, image : Path):
+        self.parsecolors = ParseColors(image)
         Visualise.display_dict(self.parsecolors.color_entries_rgb)
+
+
+    def list_colors(self, colors : Path):
+        pass
 
 if __name__ == "__main__":
     colorscheme = Colorscheme()
-    colorscheme.generate_colors()
+
+    if sys.argv[1] == '-g':
+        colorscheme.generate_colors(Path(sys.argv[2]))
