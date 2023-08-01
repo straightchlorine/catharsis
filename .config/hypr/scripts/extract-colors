@@ -130,10 +130,45 @@ class Visualise:
 
     @staticmethod
     def display_dict(rgb_colors : dict[str, tuple[int, int, int]]):
+        """
+            Display dictionary filled with RBB colors.
+        """
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         for id, rgb in rgb_colors.items():
             Visualise.__print_entry(id, rgb)
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+    @staticmethod
+    def __unpack_RGB(rgb) -> tuple[int, int, int]:
+        """
+            Unpack ImageColor._RGB type to simple tuple (raw RGB).
+
+            :param rgb ImageColor._RGB
+        """
+        r : int = rgb[0]
+        g : int = rgb[1]
+        b : int = rgb[2]
+        return (r, g, b)
+
+    @staticmethod
+    def __hex_to_rgb(hex : str) -> tuple[int, int, int]:
+        """
+            Converts HEX string into RGB tuple.
+
+            :hex color string
+        """
+        return Visualise.__unpack_RGB(ImageColor.getrgb(hex))
+
+    @staticmethod
+    def display_hex_dict(hex_colors : dict[str, str]):
+        """
+            Display dictionary filled with HEX colors.
+        """
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        for id, hex in hex_colors.items():
+            Visualise.__print_entry(id, Visualise.__hex_to_rgb(hex))
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
 
 
 class Writer:
@@ -202,12 +237,9 @@ class Reader:
         Allows to read the colors from existing files and display
         them in color.
     """
-
-    kitty_colors : dict[str, str]
-    css_colors : dict[str, str]
-
-    def __init__(self, parsed_colors : ParseColors) -> None:
-        self.parsed_colors = parsed_colors
+    # dictionaries with extracted data
+    kitty_colors : dict[str, str] = {}
+    css_colors : dict[str, str] = {}
 
     def __kitty_line_split(self, line : str) -> list[str]:
         """
@@ -237,9 +269,14 @@ class Reader:
             color = self.__kitty_line_split(line)
             self.kitty_colors[color[0]] = color[1]
 
-    def kitty_config(self, kitty_config : Path):
+    def kitty_config(self, kitty_config : Path) -> dict[str, str]:
+        """
+            Read kitty color configuration file and display
+            it along with coloring
+        """
         with open(kitty_config, 'r') as kitty_conf:
             self.__kitty_parse_file(kitty_conf)
+        return self.kitty_colors
 
     def __css_line_split(self, line : str) -> list[str]:
         """
@@ -257,7 +294,6 @@ class Reader:
 
         # new line symbols are left after the color
         output[1] = output[1].replace('\n', '')
-
         return output
 
     def __css_parse_style(self, style : typing.TextIO):
@@ -266,25 +302,57 @@ class Reader:
         """
         for line in style:
             color = self.__css_line_split(line)
-            self.kitty_colors[color[0]] = color[1]
+            self.css_colors[color[0]] = color[1]
 
-    def css_style(self, css_style : Path):
+    def css_style(self, css_style : Path) -> dict[str, str]:
+        """
+            Read css style from given file and display it
+            along with coloring.
+        """
         with open(css_style, 'r') as style:
             self.__css_parse_style(style)
+        return self.css_colors
 
 class Colorscheme:
     parsecolors : ParseColors
 
-    def generate_colors(self, image : Path):
-        self.parsecolors = ParseColors(image)
+    def generate_colors(self, image_or_config : Path):
+        """
+            Generate colors based on given image and write them
+            into .scss and .conf files.
+
+            :param image_or_config : Path to image or config
+        """
+        self.parsecolors = ParseColors(image_or_config)
         Visualise.display_dict(self.parsecolors.color_entries_rgb)
 
+        # writing generated configuration to files
+        writer = Writer(self.parsecolors)
+        writer.kitty_config()
+        writer.css_style()
 
-    def list_colors(self, colors : Path):
-        pass
+
+    def list_colors(self, config : Path):
+        """
+            Read .scss  and .conf files containing only colors
+            and display them in color.
+
+            :param config : Path to desired configuration file
+        """
+        reader = Reader()
+
+        if '.scss' in config.name:
+            print(f'[~~>] {config.name}')
+            Visualise.display_hex_dict(reader.css_style(config))
+        elif '.conf' in config.name:
+            print(f'[~~>] {config.name}')
+            Visualise.display_hex_dict(reader.kitty_config(config))
 
 if __name__ == "__main__":
+    image_or_config = Path(sys.argv[2])
     colorscheme = Colorscheme()
 
     if sys.argv[1] == '-g':
-        colorscheme.generate_colors(Path(sys.argv[2]))
+        colorscheme.generate_colors(image_or_config)
+    elif sys.argv[1] == '-l':
+        colorscheme.list_colors(image_or_config)
