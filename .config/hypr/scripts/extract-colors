@@ -228,7 +228,7 @@ class Writer:
 
         with open(css_path, 'w') as css_colors:
             for k,v in self.parsed_colors.color_entries_hex.items():
-                css_colors.write('${:<12} : {:<7}'.format(k, v) + '\n')
+                css_colors.write('${:<12} : {:<7};'.format(k, v) + '\n')
 
         print(f'[!!!] colors written to {css_path}.')
 
