@@ -8,11 +8,11 @@
         :space-evenly false
         (for i in workspace
           (button
-            :onclick 'hyprctl dispatch workspace ${i.id}'
             :class 'workspace'
+            :onclick 'hyprctl dispatch workspace ${i.id}'
             (label
               :valign 'center'
-              :class '${(i.windows > 0) ? 'workspace-occupied-text' : 'workspace-unoccupied-text'}'
+              :class '${(i.windows > 0) ? 'workspace-occupied-text' : 'workspace-unoccupied-text'} workspace-text'
               :text '${workspace-icons[i.id - 1]}'
             )
           )
@@ -20,13 +20,11 @@
       )
       (button
         :class 'workspace-active'
-        :style '
-        margin-left:  ${31 * (active-workspace - 1)}px;
-        margin-right: ${31 * (10 - active-workspace)}px;
-        '
+        :style 'margin-left:  ${31 * (active-workspace - 1)}px;
+                margin-right: ${31 * (10 - active-workspace)}px;'
         (label
           :valign 'center'
-          :class 'workspace-active-text'
+          :class 'workspace-text workspace-active-text'
           :text '${active-workspace}'
         )
       )

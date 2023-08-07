@@ -1,1 +1,75 @@
-// soon configuration
+@import 'styles/colors-classic_skyline.scss';
+
+$cpu: $color1;
+$ram: $color2;
+$drives: $color3;
+$network: $color4;
+$weather: $color5;
+$workspace_background: $color6;
+$workspace_occupied: $color7;
+$workspace_unoccupied: $color8;
+$workspace_active_background: $color10;
+
+* {
+  all: unset;
+  transition: 200ms cubic-bezier(0.1, 1, 0.1, 1);
+  background-repeat: no-repeat;
+}
+
+// bar
+.bar-background {
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
+  background-color: $background;
+}
+
+.bar {
+  background-color: $background;
+  margin: 3px;
+}
+
+// workspaces
+.workspaces {
+  background-color: transparent;
+}
+
+.workspace {
+  border: none;
+  font-size: 1rem;
+}
+
+.workspace-text {
+  font-size: 14pt;
+  font-family: 'Roboto Mono Light';
+
+  border-radius: 20px;
+
+  min-width: 27px;
+  min-height: 27px;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+
+  color: $foreground;
+  background-color: $workspace_background;
+}
+
+.workspace-active-text {
+  font-size : 13pt;
+  background-color: $workspace_active_background;
+}
+
+.workspace:hover {
+  :first-child {
+
+  }
+}
+
+.workspace-occupied-text {
+  background-color: rgba(146, 145, 145, 0.3);
+}
+
+.workspace-unoccupied-text {
+  background-color: rgba(146, 145, 145, 0.3);
+}
