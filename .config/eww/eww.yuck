@@ -13,7 +13,7 @@
   :stacking 'bottom'
   :geometry (geometry :x '5px'
                       :y '10px'
-                      :width '1882px'
+                      :width '99%'
                       :height '45px'
                       :anchor 'top center'
   )
@@ -25,12 +25,11 @@
     :space-evenly false
     :orientation 'h'
     (box
-      :class 'bar-background'
-      :style 'margin-right: -${width - 9}px;'
+    :class 'bar-background'
     )
     (centerbox
       :class 'bar'
-      :width '1920px'
+      :width 1870
       (left)
       (center)
       (right)
@@ -41,8 +40,11 @@
 (defwidget left []
   (eventbox
     (box
-      :space-evenly false :spacing 5
-      :valign 'start' :halign 'start'
+      :space-evenly false
+      :spacing 5
+      :valign 'start'
+      :halign 'start'
+      :class 'bar-left'
       (revealer
         :reveal true
         :transition 'slideright'
@@ -59,6 +61,7 @@
       :spacing 5
       :halign 'end'
       :valign 'start'
+      :class 'bar-right'
       (network-info)
       (weather)
       (clock-date)
@@ -68,12 +71,13 @@
 
 (defwidget center []
   (box
-    :space-evenly false :orientation 'v'
+    :space-evenly false 
+    :orientation 'v'
     (box
-      :valign 'start'
       :space-evenly false 
-      :spacing 5
       :halign 'center'
+      :valign 'start'
+      :spacing 5
       (box
         :space-evenly false
         :spacing 5
