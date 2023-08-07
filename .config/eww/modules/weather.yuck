@@ -4,8 +4,8 @@
         :space-evenly false
         :halign 'center'
         :orientation 'h'
-      (label :class 'weathertemp' :halign 'start' :text '${weather-temperature}°C')
-      (label :class 'weathericon' :style 'color: ${weather-color};' :text '${weather-icon}')
+      (label :class 'weather-temperature' :halign 'start' :text '${weather-temperature}°C')
+      (label :class 'weather-icon' :style 'color: ${weather-color};' :text '${weather-icon}')
     )
   )
 )

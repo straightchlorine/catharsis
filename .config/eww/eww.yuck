@@ -25,7 +25,7 @@
     :space-evenly false
     :orientation 'h'
     (box
-    :class 'bar-background'
+      :class 'bar-background'
     )
     (centerbox
       :class 'bar'
@@ -42,7 +42,7 @@
     (box
       :space-evenly false
       :spacing 5
-      :valign 'start'
+      :valign 'center'
       :halign 'start'
       :class 'bar-left'
       (revealer

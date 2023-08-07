@@ -7,10 +7,11 @@
       (box
         :class 'clock'
         :valign 'start'
+        :valign 'center'
         :orientation 'v'
         (box
           :space-evenly false
-          :halign 'start'
+          :halign 'end'
           (label :text '${time.hour}' :class 'clock hour')
           (label :text ':' :class 'clock')
           (label :text {time.minute} :class 'clock minute')

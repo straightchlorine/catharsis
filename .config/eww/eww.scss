@@ -3,7 +3,7 @@
 $cpu: $color1;
 $ram: $color2;
 $drives: $color3;
-$network: $color4;
+$network: $color5;
 $weather: $color5;
 $workspace_background: $color6;
 $workspace_occupied: $color7;
@@ -12,8 +12,9 @@ $workspace_active_background: $color10;
 
 * {
   all: unset;
-  transition: 200ms cubic-bezier(0.1, 1, 0.1, 1);
   background-repeat: no-repeat;
+  font-family: 'Roboto Mono Light';
+  transition: 200ms cubic-bezier(0.1, 1, 0.1, 1);
 }
 
 // bar
@@ -46,8 +47,8 @@ $workspace_active_background: $color10;
   min-width: 27px;
   min-height: 27px;
 
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 14px;
+  margin-bottom: 14px;
   margin-left: 2px;
   margin-right: 2px;
 
@@ -72,4 +73,91 @@ $workspace_active_background: $color10;
 
 .workspace-unoccupied-text {
   background-color: rgba(146, 145, 145, 0.3);
+}
+
+// clock
+.clock-date {
+  color: $foreground;
+}
+
+.clock {
+  font-size: 20px
+}
+
+.date {
+  font-size: 14px
+}
+
+// weather
+.weather-wrapper {
+  margin-right: 100px;
+  color: $foreground;
+}
+
+.weather-temperature {
+  font-size: 1.5rem;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  margin-left: 10px;
+}
+
+// network
+.network-info {
+  font-size: 1rem;
+  margin-right: 100px;
+  color: $network
+}
+
+.network-icon {
+  font-size: 1.5rem;
+  margin-left: 8px;
+  color: $network
+}
+
+// system information
+.system-info {
+  font-size: 1rem;
+  color: $foreground;
+}
+
+// sysinfo --cpu
+.cpu-wrapper {
+  margin-left: 10px;
+  margin-right: 30px;
+}
+
+.cpu-icon {
+  margin-right: 5px;
+}
+
+// sysinfo --ram
+.ram-wrapper {
+  margin-right: 30px;
+}
+
+.ram-icon {
+  font-size: 1.3rem;
+  margin-right: 5px;
+}
+
+// sysinfo --disk
+.disk-module {
+  margin-left: 5px;
+}
+
+.disk-mount {
+  font-size: 0.8rem;
+}
+
+.disk-usage {
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.disk-icon {
+  font-size: 22px;
+  margin-right: 5px;
+  margin-bottom: -8px;
 }
