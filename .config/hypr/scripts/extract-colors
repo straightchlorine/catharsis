@@ -241,7 +241,7 @@ class Writer:
         # name of the provided picture
         image_name = self.parsed_colors.image.stem
         # name of the generated config file
-        rofi_name ='colors-' + image_name + '.scss'
+        rofi_name ='colors-' + image_name + '.rasi'
 
         # path to the new configuration file
         rofi_path = Path.joinpath(
@@ -255,7 +255,7 @@ class Writer:
         print(f'[...] writing generated colors as {rofi_name}...')
 
         with open(rofi_path, 'w') as rofi_colors:
-            rofi_colors.write('* {')
+            rofi_colors.write('* {\n')
             for k,v in self.parsed_colors.color_entries_hex.items():
                 rofi_colors.write('{:<12} : {:<7};'.format(k, v) + '\n')
             rofi_colors.write('}')
@@ -270,6 +270,7 @@ class Reader:
     # dictionaries with extracted data
     kitty_colors : dict[str, str] = {}
     css_colors : dict[str, str] = {}
+    rofi_colors : dict[str, str] = {}
 
     def __kitty_line_split(self, line : str) -> list[str]:
         """
@@ -343,11 +344,53 @@ class Reader:
             self.__css_parse_style(style)
         return self.css_colors
 
-    def rofi_colors(self, rofi_colors : Path):
+    def __rofi_line_split(self, line : str) -> list[str]:
+        """
+            Retrieve information from single line of rofi config.
+
+            :param line single line from configuration file
+        """
+        # splitting the line according to css syntax var : #color
+        line_split = line.split(':')
+
+        # clearing the trailing spaces
+        output = []
+        for s in line_split:
+            output.append(s.strip())
+
+        # new line symbols are left after the color
+        output[1] = output[1].replace('\n', '')
+        return output
+
+    def __rofi_parse_line(self, line : str):
+        """
+            Parse each line from the file.
+
+            :param line single line from the file
+        """
+        if '{' not in line and '}' not in line:
+            color = self.__rofi_line_split(line)
+            self.rofi_colors[color[0]] = color[1]
+
+    def __rofi_parse_colors(self, rasi_colors : typing.TextIO):
+        """
+            Parse colors .rasi file.
+
+            :param rasi_colors rasi file
+        """
+        for line in rasi_colors:
+            self.__rofi_parse_line(line)
+
+    def rofi_config(self, rofi_colors : Path):
         """
             Read rofi colors form given file and display
             it along with coloring.
+
+            :param rofi_colors rofi file
         """
+        with open(rofi_colors, 'r') as rasi_colors:
+            self.__rofi_parse_colors(rasi_colors)
+        return self.rofi_colors
 
 class Colorscheme:
     parsecolors : ParseColors
@@ -366,6 +409,7 @@ class Colorscheme:
         writer = Writer(self.parsecolors)
         writer.kitty_config()
         writer.css_style()
+        writer.rofi_colors()
 
 
     def list_colors(self, config : Path):
@@ -383,6 +427,9 @@ class Colorscheme:
         elif '.conf' in config.name:
             print(f'[~~>] {config.name}')
             Visualise.display_hex_dict(reader.kitty_config(config))
+        elif '.rasi' in config.name:
+            print(f'[~~>] {config.name}')
+            Visualise.display_hex_dict(reader.rofi_config(config))
 
 if __name__ == "__main__":
     image_or_config = Path(sys.argv[2])
