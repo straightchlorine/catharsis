@@ -33,7 +33,7 @@ disk() {
   done
 
   # return output as json
-  echo '[{"name" : "root", "usage": "'"${usage[0]}"'"},{"name" : "root", "usage": "'"${usage[1]}"'"},{"name" : "root", "usage": "'"${usage[2]}"'"},{"name" : "root", "usage": "'"${usage[3]}"'"},{"name" : "root", "usage": "'"${usage[4]}"'"},{"name" : "root", "usage": "'"${usage[5]}"'"}]'
+  echo '[{"name" : "root", "usage": "'"${usage[0]}"'"},{"name" : "var", "usage": "'"${usage[1]}"'"},{"name" : "home", "usage": "'"${usage[2]}"'"},{"name" : "data", "usage": "'"${usage[3]}"'"},{"name" : "backup", "usage": "'"${usage[4]}"'"},{"name" : "virt", "usage": "'"${usage[5]}"'"}]'
 }
 
 #battery() {
