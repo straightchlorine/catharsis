@@ -359,6 +359,7 @@ class Reader:
             output.append(s.strip())
 
         # new line symbols are left after the color
+        output[1] = output[1].replace(';', '')
         output[1] = output[1].replace('\n', '')
         return output
 
@@ -410,7 +411,6 @@ class Colorscheme:
         writer.kitty_config()
         writer.css_style()
         writer.rofi_colors()
-
 
     def list_colors(self, config : Path):
         """
