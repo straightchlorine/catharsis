@@ -71,6 +71,8 @@ class ParseColors:
     def __parse_rgb(self, colors : list):
         """
             Parses RGB colors into dictionary.
+
+            :param colors list of generated colors
         """
         self.color_entries_rgb = { 'background' : colors[0],
                                    'foreground' : colors[3],
@@ -86,6 +88,8 @@ class ParseColors:
     def __parse_hex(self, colors : list):
         """
             Parses RGB colors into dictionary.
+
+            :param colors list of generated colors
         """
         self.color_entries_hex = { 'background' : colors[0],
                                    'foreground' : colors[3],
@@ -103,6 +107,8 @@ class ParseColors:
         """
             Parses generated_colors into 3 special colors and 15 basic ones,
             defining how terminal and programs within it look.
+
+            :param colors list of generated colors
         """
         if type(colors[0]) is tuple:
             self.__parse_rgb(colors)
@@ -119,6 +125,8 @@ class Visualise:
         """
             Generates colored string - four spaces with background
             in desired color.
+
+            :param rgb rgb tuple
         """
         color_code = f"\033[48;2;{rgb[0]};{rgb[1]};{rgb[2]}m" 
         reset_code = "\033[0m" 
@@ -126,12 +134,21 @@ class Visualise:
 
     @staticmethod
     def __print_entry(id : str, rgb : tuple[int, int, int]):
-        print('{:<12}{:<12}'.format(id, Visualise.__gen_colored_output(rgb)))
+        """
+            Print one line of colored output, the name of the color
+            and the color itself.
+
+            :param id name of the color
+            :param rgb color
+        """
+        print('{:<15}{:<12}'.format(id, Visualise.__gen_colored_output(rgb)))
 
     @staticmethod
     def display_dict(rgb_colors : dict[str, tuple[int, int, int]]):
         """
             Display dictionary filled with RBB colors.
+
+            :param rgb_colors dictionary of color names and their rgb's
         """
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         for id, rgb in rgb_colors.items():
@@ -155,7 +172,7 @@ class Visualise:
         """
             Converts HEX string into RGB tuple.
 
-            :hex color string
+            :param hex color string
         """
         return Visualise.__unpack_RGB(ImageColor.getrgb(hex))
 
@@ -163,12 +180,13 @@ class Visualise:
     def display_hex_dict(hex_colors : dict[str, str]):
         """
             Display dictionary filled with HEX colors.
+
+            :param hex_colors dictionary of colors and their names
         """
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         for id, hex in hex_colors.items():
             Visualise.__print_entry(id, Visualise.__hex_to_rgb(hex))
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-
 
 
 class Writer:
@@ -241,7 +259,7 @@ class Writer:
         # name of the provided picture
         image_name = self.parsed_colors.image.stem
         # name of the generated config file
-        rofi_name ='colors-' + image_name + '.rasi'
+        rofi_name = image_name + '.rasi'
 
         # path to the new configuration file
         rofi_path = Path.joinpath(
@@ -254,10 +272,31 @@ class Writer:
 
         print(f'[...] writing generated colors as {rofi_name}...')
 
+        rofi_colors_hex = {
+            'background' : self.parsed_colors.color_entries_hex['background'],
+            'background-alt' : self.parsed_colors.color_entries_hex['color1'],
+            'foreground' : self.parsed_colors.color_entries_hex['foreground'],
+            'selected' : self.parsed_colors.color_entries_hex['color2'],
+            'active' : self.parsed_colors.color_entries_hex['color3'],
+            'urgent' : self.parsed_colors.color_entries_hex['color3']
+        }
+
         with open(rofi_path, 'w') as rofi_colors:
             rofi_colors.write('* {\n')
-            for k,v in self.parsed_colors.color_entries_hex.items():
+            rofi_colors.write('/* colors for rofi themes */')
+            rofi_colors.write('\n')
+
+            for k,v in rofi_colors_hex.items():
                 rofi_colors.write('{:<12} : {:<7};'.format(k, v) + '\n')
+
+            rofi_colors.write('\n')
+            rofi_colors.write('/* rest of the generated colors */')
+            rofi_colors.write('\n')
+
+
+            for k,v in self.parsed_colors.color_entries_hex.items():
+                if k not in ['background', 'foreground']:
+                    rofi_colors.write('{:<12} : {:<7};'.format(k, v) + '\n')
             rofi_colors.write('}')
 
         print(f'[!!!] colors written to {rofi_name}.')
@@ -380,7 +419,8 @@ class Reader:
             :param rasi_colors rasi file
         """
         for line in rasi_colors:
-            self.__rofi_parse_line(line)
+            if ';' in line and ':' in line:
+                self.__rofi_parse_line(line)
 
     def rofi_config(self, rofi_colors : Path):
         """
@@ -408,8 +448,8 @@ class Colorscheme:
 
         # writing generated configuration to files
         writer = Writer(self.parsecolors)
-        writer.kitty_config()
-        writer.css_style()
+        #writer.kitty_config()
+        #writer.css_style()
         writer.rofi_colors()
 
     def list_colors(self, config : Path):
