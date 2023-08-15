@@ -1,7 +1,6 @@
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-
 source $ZDOTDIR/plugins.zsh
 source $ZDOTDIR/env.zsh
 
@@ -17,4 +16,4 @@ HISTSIZE=1000
 SAVEHIST=1000
 # End of lines configured by zsh-newuser-install
 
-
+bindkey -v
