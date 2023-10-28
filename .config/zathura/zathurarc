@@ -1,0 +1,4 @@
+set selection-clipboard clipboard
+
+map b toggle_statusbar
+map <C-i> recolor
