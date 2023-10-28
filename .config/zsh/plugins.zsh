@@ -44,7 +44,11 @@ zinit light ogham/exa
 zinit ice wait lucid
 zinit light changyuheng/zsh-interactive-cd
 
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
 zinit ice as"command" from"gh-r" \
           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
           atpull"%atclone" src"init.zsh"
+
 zinit light starship/starship
