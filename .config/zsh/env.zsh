@@ -1,4 +1,3 @@
-path+=($HOME/automation)
 path+=($HOME/.venv/lib)
 path+=($HOME/.cache/yay/eww/target/release)
 path+=($HOME/.local/share/language-servers/verible-bin)
@@ -31,8 +30,6 @@ alias vim="nvim"
 alias ls='exa -al --color=always --group-directories-first'
 alias ll='exa -l --color=always --group-directories-first'
 alias sl='exa -l --color=always --group-directories-first'
-
-alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
 
 # rustup shell setup
 . $HOME/.cargo/env
