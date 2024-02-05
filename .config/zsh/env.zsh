@@ -1,8 +1,5 @@
 path+=($HOME/.venv/lib)
 path+=($HOME/.cache/yay/eww/target/release)
-path+=($HOME/.local/share/language-servers/verible-bin)
-path+=($HOME/.local/share/language-servers/arduino-cli/bin)
-path+=($HOME/.local/share/language-servers/kotlin-language-server/server/build/install/server/bin)
 path+=($HOME/.local/bin)
 path+=(/opt/flutter/bin)
 export PATH
@@ -27,12 +24,38 @@ export GPG_TTY=$(tty)
 # rustup shell setup
 . $HOME/.cargo/env
 
-export GROOVY_LANGUAGE_SERVER="$HOME/.local/share/language-servers/groovy-language-server/build/libs/groovy-language-server-all.jar"
-export GRADLE_LANGUAGE_SERVER="$HOME/.local/share/language-servers/vscode-gradle/gradle-language-server/build/install/gradle-language-server/bin/gradle-language-server"
+# Following variables are utilised by neovim config in order to provide full
+# support for development in Java. That involves language servers and debugging.
+#
+# If you do not need such functionality or you have your own configuration,
+# feel free to remove all of the following lines after this comment.
 
-export JDTLS_ECLIPSE_EQUINOX_LAUNCHER_PLUGIN="/usr/share/java/jdtls/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar"
-export JDTLS_SYSTEM_CONFIGURATION="/usr/share/java/jdtls/config_linux"
-export JDTLS_WORKSPACE="$HOME/.local/jdtls_workspaces"
+# ~~ neovim java support auxiliary variables ~~
 
-export JAVA_DEBUG_PLUGIN="$HOME/.local/share/language-servers/java-debug/com.microsoft.java.debug.plugin/target"
-export JAVA_TEST_RUNNER_PLUGIN="$HOME/.local/share/language-servers/vscode-java-test/server"
+# Set it to the path where you have groovy-language-server-all.jar file.
+# typically something like this:
+# groovy-language-server/build/libs/groovy-language-server-all.jar"
+export GROOVY_LANGUAGE_SERVER=""
+
+# Set it to the path where you have gradle-language-server script.
+# typically something like this: 
+# ../vscode-gradle/gradle-language-server/build/install/gradle-language-server/bin/gradle-language-server
+export GRADLE_LANGUAGE_SERVER=""
+
+# For exact configuration, please refer to:
+# https://github.com/mfussenegger/nvim-jdtls
+export JDTLS_ECLIPSE_EQUINOX_LAUNCHER_PLUGIN=""
+export JDTLS_SYSTEM_CONFIGURATION=""
+export JDTLS_WORKSPACE=""
+
+# Set to the path where you have downloaded java-debug plugin.
+# typically something like this:
+# ../java-debug/com.microsoft.java.debug.plugin/target
+export JAVA_DEBUG_PLUGIN=""
+
+# set to the path where you have downloaded vscode-java-test plugin.
+# typically something like this:
+# ../vscode-java-test/server
+export JAVA_TEST_RUNNER_PLUGIN=""
+
+# ~~ neovim java support auxiliary variables ~~
