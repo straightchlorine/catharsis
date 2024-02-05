@@ -24,13 +24,6 @@ export GOPATH=$HOME/.local/go
 # commit sign prompt
 export GPG_TTY=$(tty)
 
-# aliases
-alias vim="nvim"
-
-alias ls='exa -al --color=always --group-directories-first'
-alias ll='exa -l --color=always --group-directories-first'
-alias sl='exa -l --color=always --group-directories-first'
-
 # rustup shell setup
 . $HOME/.cargo/env
 
