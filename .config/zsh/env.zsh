@@ -57,5 +57,3 @@ export JAVA_DEBUG_PLUGIN=""
 # typically something like this:
 # ../vscode-java-test/server
 export JAVA_TEST_RUNNER_PLUGIN=""
-
-# ~~ neovim java support auxiliary variables ~~
