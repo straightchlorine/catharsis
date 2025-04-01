@@ -24,6 +24,21 @@ export GPG_TTY=$(tty)
 # rustup shell setup
 . $HOME/.cargo/env
 
+__conda_setup="$('$HOME/.local/share/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/.local/share/anaconda/etc/profile.d/conda.sh" ]; then
+        . "$HOME/.local/share/anaconda/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/.local/share/anaconda/bin:$PATH"
+    fi
+fi
+unset __conda_setup 
+
+# please completion
+source <(plz --completion_script)
+
 # Following variables are utilised by neovim config in order to provide full
 # support for development in Java. That involves language servers and debugging.
 #
@@ -38,7 +53,7 @@ export GPG_TTY=$(tty)
 export GROOVY_LANGUAGE_SERVER=""
 
 # Set it to the path where you have gradle-language-server script.
-# typically something like this: 
+# typically something like this:
 # ../vscode-gradle/gradle-language-server/build/install/gradle-language-server/bin/gradle-language-server
 export GRADLE_LANGUAGE_SERVER=""
 
