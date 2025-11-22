@@ -1,0 +1,29 @@
+/* Waybar Color Scheme - Blackish/Reddish/Pinkish */
+
+/* Base colors */
+@define-color base-bg rgba(25, 25, 30, 0.85);
+@define-color widget-bg rgba(40, 35, 38, 0.5);
+
+/* Accent colors - muted reddish/pinkish tones */
+@define-color accent-red #8b6b6b;
+@define-color accent-pink #9b7b8b;
+@define-color accent-rose #8b6b7b;
+@define-color accent-mauve #7b6b8b;
+@define-color accent-burgundy #8b5b6b;
+@define-color accent-wine #7b5b6b;
+
+/* Text colors */
+@define-color text-primary #e0e0e0;
+@define-color text-secondary #d0d0d0;
+@define-color text-muted #b0b0b0;
+
+/* Status colors - muted */
+@define-color status-good #7b9b7b;
+@define-color status-warning #9b8b6b;
+@define-color status-critical #9b6b6b;
+@define-color status-info #6b7b8b;
+
+/* Workspace colors */
+@define-color workspace-bg rgba(40, 35, 40, 0.5);
+@define-color workspace-focused rgba(70, 60, 70, 0.6);
+@define-color workspace-urgent rgba(100, 60, 70, 0.8);

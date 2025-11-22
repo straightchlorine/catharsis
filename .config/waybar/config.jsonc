@@ -1,0 +1,168 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 18,
+  "spacing": 0,
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+  "modules-left": [
+    "sway/workspaces",
+    "custom/network-info",
+    "network"
+  ],
+  "modules-center": [
+    "custom/weather",
+    "clock"
+  ],
+  "modules-right": [
+    "custom/system-processes",
+    "custom/system-info",
+    "backlight",
+    "custom/mic-status",
+    "pulseaudio",
+    "tray",
+    "battery"
+  ],
+  "sway/workspaces": {
+    "disable-scroll": false,
+    "sort-by-number": true,
+    "all-outputs": false,
+    "format": "{icon} {name}",
+    "format-icons": {
+      "urgent": "",
+      "focused": "",
+      "default": ""
+    }
+  },
+  "tray": {
+    "spacing": 5
+  },
+  "clock": {
+    "tooltip-format": "<big><b>{:%A, %d %B %Y}</b></big>\n\n<tt><span font='12'>{calendar}</span></tt>",
+    "format": "{:%H:%M:%S %a, %b %d %Y}",
+    "interval": 1,
+    "on-click": "kitty calcurse",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "week-start": "monday",
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "custom/network-info": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/network-info",
+    "interval": 3,
+    "on-click": "kitty -e sh -c 'nethogs; read -p \"Press Enter to close...\"'"
+  },
+  "custom/system-processes": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/system-processes",
+    "interval": 3,
+    "on-click": "kitty -e sh -c 'htop; read -p \"Press Enter to close...\"'"
+  },
+  "custom/system-info": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/system-info",
+    "interval": 3,
+    "on-click": "kitty -e sh -c 'btop; read -p \"Press Enter to close...\"'"
+  },
+  "network": {
+    "format-wifi": "  {essid}",
+    "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+    "format-linked": "  {ifname}",
+    "format-disconnected": "󰖪 Disconnected",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": " {volume}%",
+    "format-bluetooth-muted": " ",
+    "format-muted": " ",
+    "format-source": " {volume}%",
+    "format-source-muted": " ",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "🎧",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󱐋 {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "custom/weather": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/weather --status 97659bd01da32dfe0d8508811883ba05 3081368",
+    "interval": 180,
+    "on-click": "kitty -e sh -c '/usr/sbin/wego; read -p \"Press Enter to close...\"'"
+  },
+  "custom/mic-status": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/mic-status",
+    "return-type": "json",
+    "signal": 8,
+    "interval": "once",
+    "on-click": "~/.config/waybar/scripts/mic-status toggle"
+  }
+}

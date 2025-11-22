@@ -22,3 +22,10 @@
 # add neovim submodule
 !.config/
 !.config/nvim/
+
+# add waybar config
+!.config/waybar
+!.config/waybar/colors.css
+!.config/waybar/config.jsonc
+!.config/waybar/style.css
+!.config/waybar/scripts/**

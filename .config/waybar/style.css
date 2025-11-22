@@ -1,0 +1,329 @@
+@import "colors.css";
+
+* {
+  border: none;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+window#waybar {
+  background-color: @base-bg;
+  color: @text-primary;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  border-radius: 0px;
+  padding: 2px 0px;
+  box-shadow: none;
+}
+window#waybar.hidden {
+  opacity: 0.2;
+}
+/* Make workspaces container square */
+#workspaces {
+  margin-left: 0px;
+  margin-right: 24px;
+  border-radius: 0px;
+  background-color: @workspace-bg;
+  padding: 1px;
+}
+#workspaces button {
+  padding: 0px 8px;
+  background-color: transparent;
+  color: #d8d8d8;
+  border-radius: 0px;
+  transition: all 0.2s ease;
+  margin: 0 1px;
+}
+/* Handle single workspace case */
+#workspaces button:only-child {
+  border-radius: 0px;
+}
+/* Handle multiple workspaces */
+#workspaces button:first-child:not(:only-child) {
+  border-radius: 0px;
+}
+#workspaces button:last-child:not(:only-child) {
+  border-radius: 0px;
+}
+#workspaces button:hover {
+  background: @workspace-focused;
+  color: @text-primary;
+  box-shadow: inset 0 -2px 0 @accent-pink;
+}
+#workspaces button.focused {
+  background-color: @workspace-focused;
+  color: @text-primary;
+  box-shadow: inset 0 -2px 0 @accent-rose;
+}
+#workspaces button.urgent {
+  background-color: @workspace-urgent;
+  color: @text-primary;
+}
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#tray,
+#mode,
+#window,
+#custom-weather,
+#custom-zeit,
+#custom-network-info,
+#custom-system-processes,
+#custom-system-info,
+#custom-mic-status,
+#custom-portage {
+  padding: 0 8px;
+  margin: 0 2px;
+  min-width: 30px;
+  border-radius: 0px;
+  background-color: transparent;
+  color: #e0e0e0;
+}
+/* Center modules with bottom accent lines - cohesive color scheme */
+#clock {
+  padding: 3px 10px;
+  margin: 0 6px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-red;
+}
+
+#custom-weather {
+  padding: 3px 8px;
+  margin: 0 6px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-pink;
+}
+
+#custom-zeit {
+  padding: 3px 8px;
+  margin: 0 6px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-rose;
+}
+
+#network {
+  padding: 3px 8px;
+  margin: 0 3px;
+  margin-left: 0px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-mauve;
+}
+
+#pulseaudio {
+  padding: 3px 8px;
+  margin: 0 4px;
+  margin-right: 0px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-burgundy;
+}
+
+#backlight {
+  padding: 3px 8px;
+  margin: 0 4px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-wine;
+}
+
+#battery {
+  padding: 3px 8px;
+  margin: 0 4px;
+  margin-right: 0px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-rose;
+}
+
+#tray {
+  padding: 3px 6px;
+  margin: 0 4px;
+  margin-right: 0px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-pink;
+}
+/* Status indicators with cohesive colors */
+#battery.charging,
+#battery.plugged {
+  background-color: @widget-bg;
+  color: @status-good;
+  border-bottom: 2px solid @status-good;
+}
+#battery.warning:not(.charging) {
+  background-color: @widget-bg;
+  color: @status-warning;
+  border-bottom: 2px solid @status-warning;
+}
+#battery.critical:not(.charging) {
+  background-color: @widget-bg;
+  color: @status-critical;
+  border-bottom: 2px solid @status-critical;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#battery.good:not(.charging) {
+  background-color: @widget-bg;
+  color: @status-good;
+  border-bottom: 2px solid @status-good;
+}
+#network.disconnected {
+  background-color: @widget-bg;
+  color: @status-critical;
+  border-bottom: 2px solid @status-critical;
+}
+#pulseaudio.muted {
+  background-color: @widget-bg;
+  color: @text-muted;
+  border-bottom: 2px solid @text-muted;
+}
+#temperature.critical {
+  background-color: @widget-bg;
+  color: @status-critical;
+  border-bottom: 2px solid @status-critical;
+}
+/* System monitoring widgets with cohesive color scheme */
+#custom-network-info {
+  padding: 3px 8px;
+  margin: 0 3px;
+  background-color: transparent;
+  color: @text-primary;
+  border: none;
+  min-width: 180px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+}
+
+#custom-system-processes {
+  padding: 3px 8px;
+  margin: 0 6px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-mauve;
+}
+
+#custom-system-info {
+  padding: 3px 8px;
+  margin: 0 6px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-burgundy;
+}
+
+#custom-mic-status {
+  padding: 3px 8px;
+  margin: 0 6px;
+  border-radius: 0px;
+  background-color: @widget-bg;
+  color: @text-primary;
+  border-bottom: 2px solid @accent-wine;
+}
+
+#custom-mic-status.muted {
+  background-color: @widget-bg;
+  color: @status-critical;
+  border-bottom: 2px solid @status-critical;
+}
+
+/* Hover effects */
+#custom-network-info:hover {
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#custom-system-processes:hover {
+  background-color: rgba(75, 65, 85, 0.9);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#custom-system-info:hover {
+  background-color: rgba(85, 75, 65, 0.9);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#custom-mic-status:hover {
+  background-color: rgba(65, 75, 85, 0.9);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#clock:hover {
+  background-color: rgba(70, 80, 90, 0.9);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#custom-weather:hover {
+  background-color: rgba(75, 85, 95, 0.9);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#custom-zeit:hover {
+  background-color: rgba(85, 75, 95, 0.9);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#network:hover {
+  background-color: rgba(70, 75, 85, 0.8);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#pulseaudio:hover {
+  background-color: rgba(75, 70, 85, 0.8);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#backlight:hover {
+  background-color: rgba(85, 80, 70, 0.8);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#battery:hover {
+  background-color: rgba(75, 85, 75, 0.8);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+#tray:hover {
+  background-color: rgba(70, 70, 80, 0.8);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+@keyframes blink {
+  to {
+    background-color: @widget-bg;
+    border-bottom: 2px solid @accent-red;
+    color: @accent-red;
+  }
+}
