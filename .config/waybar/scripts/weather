@@ -1,0 +1,282 @@
+#!/bin/bash
+
+### weather
+# Get the information from OpenWeather API via curl query.
+# Each value is stored within environmental variable with OPENWEATHER_ prefix.
+#
+# Author: Piotr Krzysztof Lis - github.com/straightchlorine
+###
+
+# TODO: Maybe implement in lua for consistency, not a priority though
+
+# Help message
+show_help() {
+    cat << EOF
+    Usage: $0 {--status|--data|--temp|--temp-felt|--temp-max|--temp-min|--pressure|--icon|--colour|--country|--city|--description|--humidity|--wind-speed|--wind-degree|--visibility|--help} api_key (optional) city_id (optional)
+
+Options:
+  --status       Display the weather icon and felt temperature.
+  --data         Display detailed weather information including country, city, description, temperature, felt temperature, max/min temperature, pressure, humidity, wind speed, wind degree, and visibility.
+  --temp         Display the temperature.
+  --temp-felt    Display the felt temperature.
+  --temp-max     Display the maximum temperature.
+  --temp-min     Display the minimum temperature.
+  --pressure     Display the pressure.
+  --icon         Display the weather icon.
+  --colour       Display the weather colour.
+  --country      Display the country.
+  --city         Display the city.
+  --description  Display the weather description.
+  --humidity     Display the humidity.
+  --wind-speed   Display the wind speed.
+  --wind-degree  Display the wind degree.
+  --visibility   Display the visibility.
+  --help         Display this help message.
+
+Author: Piotr Krzysztof Lis - github.com/straightchlorine
+EOF
+}
+
+# possibility to set the credentials in the script from external output
+if [[ -z "$WEATHER_CREDENTIALS_KEY" ]]; then
+    export WEATHER_CREDENTIALS_KEY="$2"
+fi
+
+if [[ -z "$WEATHER_CREDENTIALS_CITY" ]]; then
+    export WEATHER_CREDENTIALS_CITY="$3"
+fi
+
+# Cache directory and file
+CACHE_DIR="$HOME/.cache"
+CACHE_FILE="$CACHE_DIR/weather.json"
+
+# Create cache directory if it doesn't exist
+mkdir -p "$CACHE_DIR"
+
+# Call the OpenWeather API and cache the result
+#
+# Returns: JSON response from the OpenWeather API
+api_call() {
+    api_url="curl -sf 'api.openweathermap.org/data/2.5/weather?APPID=$WEATHER_CREDENTIALS_KEY&id=$WEATHER_CREDENTIALS_CITY&units=metric'"
+    api_output=$(eval $api_url)
+
+    # Cache the JSON response if successful
+    if [ ! -z "$api_output" ] && echo "$api_output" | jq . > /dev/null 2>&1; then
+        echo "$api_output" > "$CACHE_FILE"
+    fi
+
+    echo "$api_output"
+}
+
+# Get JSON from cache or API
+#
+# Returns: JSON response (cached or fresh)
+get_weather_json() {
+    # Check if cache file exists and is recent (less than 10 minutes old)
+    if [ -f "$CACHE_FILE" ] && [ $(($(date +%s) - $(stat -c %Y "$CACHE_FILE"))) -lt 600 ]; then
+        cat "$CACHE_FILE"
+    else
+        api_call
+    fi
+}
+
+# Process the JSON reponse into the environmental variables.
+#
+# Returns: 1 if failed, 0 if successful
+export_var() {
+    json=$(get_weather_json)
+    if [ ! -z "$json" ]; then
+
+        # cosmetics
+        export OPENWEATHER_COUNTRY=$(echo "$json" | jq ".sys.country")
+        export OPENWEATHER_CITY=$(echo "$json" | jq ".name")
+        export OPENWEATHER_DESCRIPTION=$(echo "$json" | jq -r ".weather[0].description")
+        export OPENWEATHER_ICON=$(echo "$json" | jq -r ".weather[0].icon")
+
+        # data
+        export OPENWEATHER_TEMPERATURE=$(echo "$json" | jq ".main.temp")
+        export OPENWEATHER_TEMPERATURE_FELT=$(echo "$json" | jq ".main.feels_like")
+        export OPENWEATHER_TEMPERATURE_MIN=$(echo "$json" | jq ".main.temp_min")
+        export OPENWEATHER_TEMPERATURE_MAX=$(echo "$json" | jq ".main.temp_max")
+        export OPENWEATHER_PRESSURE=$(echo "$json" | jq ".main.pressure")
+        export OPENWEATHER_HUMIDITY=$(echo "$json" | jq ".main.humidity")
+
+        export OPENWEATHER_WIND_SPEED=$(echo "$json" | jq ".wind.speed")
+        export OPENWEATHER_WIND_DEGREE=$(echo "$json" | jq ".wind.deg")
+
+        export OPENWEATHER_VISIBILITY=$(echo "$json" | jq ".visibility")
+
+        case $OPENWEATHER_ICON in
+
+            "50d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#7c6f64"
+                ;;
+            "50n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#7c6f64"
+                ;;
+            "01d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#ffea00"
+                ;;
+            "01n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#fbf1c7"
+                ;;
+            "02d" | "03d" | "04d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#83a598"
+                ;;
+            "02n" | "03n" | "04n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#83a598"
+                ;;
+            "09d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#427b58"
+                ;;
+            "09n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#427b58"
+                ;;
+            "10d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#689d6a"
+                ;;
+            "10n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#689d6a"
+                ;;
+            "11d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#fabd2f"
+                ;;
+            "11n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#fabd2f"
+                ;;
+            "13d")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#fbf1c7"
+                ;;
+            "13n")
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#fbf1c7"
+                ;;
+            *)
+                export OPENWEATHER_ICON=""
+                export OPENWEATHER_COLOR="#fb4934"
+                ;;
+
+        esac
+    else
+
+        export OPENWEATHER_COUNTRY=""
+        export OPENWEATHER_CITY=""
+        export OPENWEATHER_DESCRIPTION=""
+
+        export OPENWEATHER_COLOR="#f93822"
+        export OPENWEATHER_ICON=""
+
+        export OPENWEATHER_TEMPERATURE=""
+        export OPENWEATHER_TEMPERATURE_FELT=""
+        export OPENWEATHER_TEMPERATURE_MAX=""
+        export OPENWEATHER_TEMPERATURE_MIN=""
+
+        export OPENWEATHER_PRESSURE=""
+        export OPENWEATHER_HUMIDITY=""
+
+        export OPENWEATHER_WIND_SPEED=""
+        export OPENWEATHER_WIND_DEGREE=""
+
+        export OPENWEATHER_VISIBILITY=""
+
+        echo "Error: Weather API call failed."
+        exit 1
+
+    fi
+}
+
+# procuring the data and setting the variables
+export_var
+
+# argument parsing
+if [ $? -ne 0 ]; then
+    exit 1
+else
+    case "$1" in
+        "--status")
+            echo "$OPENWEATHER_ICON $OPENWEATHER_TEMPERATURE_FELT°C"
+            ;;
+        "--data")
+            echo "Country: $OPENWEATHER_COUNTRY"
+            echo "City: $OPENWEATHER_CITY"
+            echo "Description: $OPENWEATHER_DESCRIPTION"
+            echo "Temperature: $OPENWEATHER_TEMPERATURE°C"
+            echo "Felt Temperature: $OPENWEATHER_TEMPERATURE_FELT°C"
+            echo "Max Temperature: $OPENWEATHER_TEMPERATURE_MAX°C"
+            echo "Min Temperature: $OPENWEATHER_TEMPERATURE_MIN°C"
+            echo "Pressure: $OPENWEATHER_PRESSURE hPa"
+            echo "Humidity: $OPENWEATHER_HUMIDITY%"
+            echo "Wind Speed: $OPENWEATHER_WIND_SPEED m/s"
+            echo "Wind Degree: $OPENWEATHER_WIND_DEGREE°"
+            echo "Visibility: $OPENWEATHER_VISIBILITY m"
+            ;;
+        "--temp")
+            echo "$OPENWEATHER_TEMPERATURE°C"
+            ;;
+        "--temp-felt")
+            echo "$OPENWEATHER_TEMPERATURE_FELT°C"
+            ;;
+        "--temp-max")
+            echo "$OPENWEATHER_TEMPERATURE_MAX°C"
+            ;;
+        "--temp-min")
+            echo "$OPENWEATHER_TEMPERATURE_MIN°C"
+            ;;
+        "--pressure")
+            echo "$OPENWEATHER_PRESSURE hPa"
+            ;;
+        "--icon")
+            echo "$OPENWEATHER_ICON"
+            ;;
+        "--colour")
+            echo "$OPENWEATHER_COLOR"
+            ;;
+        "--country")
+            echo "$OPENWEATHER_COUNTRY"
+            ;;
+        "--city")
+            echo "$OPENWEATHER_CITY"
+            ;;
+        "--description")
+            echo "$OPENWEATHER_DESCRIPTION"
+            ;;
+        "--humidity")
+            echo "$OPENWEATHER_HUMIDITY%"
+            ;;
+        "--wind-speed")
+            echo "$OPENWEATHER_WIND_SPEED m/s"
+            ;;
+        "--wind-degree")
+            echo "$OPENWEATHER_WIND_DEGREE°"
+            ;;
+        "--visibility")
+            echo "$OPENWEATHER_VISIBILITY m"
+            ;;
+        "--json")
+            # JSON output for waybar with tooltip
+            tooltip="Country: $OPENWEATHER_COUNTRY\\nCity: $OPENWEATHER_CITY\\nDescription: $OPENWEATHER_DESCRIPTION\\nTemperature: $OPENWEATHER_TEMPERATURE°C\\nFelt Temperature: $OPENWEATHER_TEMPERATURE_FELT°C\\nMax Temperature: $OPENWEATHER_TEMPERATURE_MAX°C\\nMin Temperature: $OPENWEATHER_TEMPERATURE_MIN°C\\nPressure: $OPENWEATHER_PRESSURE hPa\\nHumidity: $OPENWEATHER_HUMIDITY%\\nWind Speed: $OPENWEATHER_WIND_SPEED m/s\\nWind Degree: $OPENWEATHER_WIND_DEGREE°\\nVisibility: $OPENWEATHER_VISIBILITY m"
+            jq -n --arg text "$OPENWEATHER_ICON $OPENWEATHER_TEMPERATURE_FELT°C" --arg tooltip "$tooltip" '{text: $text, tooltip: $tooltip}'
+            ;;
+        "--help" | "")
+            show_help
+            ;;
+        *)
+            echo "Invalid option: $1" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+fi

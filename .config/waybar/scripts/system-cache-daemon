@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# System cache daemon - runs update-system-cache every 2 seconds
+CACHE_SCRIPT="$HOME/.config/waybar/scripts/update-system-cache"
+PIDFILE="$HOME/.cache/system-cache-daemon.pid"
+
+# Function to cleanup on exit
+cleanup() {
+    echo "Stopping system cache daemon..."
+    rm -f "$PIDFILE"
+    exit 0
+}
+
+# Set up signal handlers
+trap cleanup SIGTERM SIGINT
+
+# Check if already running
+if [ -f "$PIDFILE" ]; then
+    PID=$(cat "$PIDFILE")
+    if kill -0 "$PID" 2>/dev/null; then
+        echo "System cache daemon already running (PID: $PID)"
+        exit 1
+    else
+        rm -f "$PIDFILE"
+    fi
+fi
+
+# Write PID file
+echo $$ > "$PIDFILE"
+
+echo "Starting system cache daemon (PID: $$)"
+
+# Main loop - update cache every 2 seconds
+while true; do
+    "$CACHE_SCRIPT" >/dev/null 2>&1
+    sleep 2
+done

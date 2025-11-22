@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Cache file location
+CACHE_FILE="$HOME/.cache/system-info.json"
+
+# Check if cache file exists
+if [ ! -f "$CACHE_FILE" ]; then
+    echo "Network unavailable"
+    exit 1
+fi
+
+# Read network data from cache
+network=$(jq -r '.network' "$CACHE_FILE" 2>/dev/null)
+
+# Display network data (icons are now included in the data)
+echo "$network"

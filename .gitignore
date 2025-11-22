@@ -28,4 +28,5 @@
 !.config/waybar/colors.css
 !.config/waybar/config.jsonc
 !.config/waybar/style.css
+!.config/waybar/scripts
 !.config/waybar/scripts/**

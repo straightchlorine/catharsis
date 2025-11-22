@@ -1,0 +1,111 @@
+#!/bin/bash
+
+# Cache file location
+CACHE_FILE="$HOME/.cache/system-info.json"
+SYSTEM_CACHE_FILE="$HOME/.cache/system-processes.json"
+
+# Get CPU usage with decimal support and fixed width
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{printf "%4.1f", 100 - $1}')
+
+# Get temperature (try multiple sources) with fixed width
+temp="N/A"
+if command -v sensors >/dev/null 2>&1; then
+    # Try CPU temperature first (Tctl for AMD Ryzen)
+    temp_val=$(sensors | grep "Tctl:" | awk '{print $2}' | sed 's/+\([0-9.]*\)°C/\1/')
+    if [ -n "$temp_val" ]; then
+        temp=$(awk "BEGIN {printf \"%4.1f°C\", $temp_val}")
+    fi
+elif [ -f /sys/class/thermal/thermal_zone0/temp ]; then
+    temp_raw=$(cat /sys/class/thermal/thermal_zone0/temp)
+    temp=$(awk "BEGIN {printf \"%4.1f°C\", $temp_raw / 1000}")
+fi
+
+# Get memory usage percentage with decimal support and fixed width
+mem_info=$(free | grep "Mem:")
+mem_used=$(echo $mem_info | awk '{print $3}')
+mem_total=$(echo $mem_info | awk '{print $2}')
+mem_percent=$(awk "BEGIN {printf \"%4.1f\", ($mem_used/$mem_total)*100}")
+
+# Get network activity (bytes/sec over 1 second interval)
+if [ -f /proc/net/dev ]; then
+    # Read network stats twice with 1 second interval
+    net_stats1=$(grep -E "(eth0|enp|wlp|wlan)" /proc/net/dev | head -1 | awk '{print $2, $10}')
+    sleep 1
+    net_stats2=$(grep -E "(eth0|enp|wlp|wlan)" /proc/net/dev | head -1 | awk '{print $2, $10}')
+
+    if [ -n "$net_stats1" ] && [ -n "$net_stats2" ]; then
+        rx1=$(echo $net_stats1 | awk '{print $1}')
+        tx1=$(echo $net_stats1 | awk '{print $2}')
+        rx2=$(echo $net_stats2 | awk '{print $1}')
+        tx2=$(echo $net_stats2 | awk '{print $2}')
+
+        rx_bytes=$((rx2-rx1))
+        tx_bytes=$((tx2-tx1))
+
+        # Format with appropriate units and fixed width
+        if [ $rx_bytes -gt 1048576 ]; then
+            rx_display=$(awk "BEGIN {printf \"%5.1f\", $rx_bytes/1048576}")
+            rx_unit="MB/s"
+        elif [ $rx_bytes -gt 1024 ]; then
+            rx_display=$(awk "BEGIN {printf \"%5.1f\", $rx_bytes/1024}")
+            rx_unit="KB/s"
+        else
+            rx_display=$(awk "BEGIN {printf \"%5.0f\", $rx_bytes}")
+            rx_unit=" B/s"
+        fi
+
+        if [ $tx_bytes -gt 1048576 ]; then
+            tx_display=$(awk "BEGIN {printf \"%5.1f\", $tx_bytes/1048576}")
+            tx_unit="MB/s"
+        elif [ $tx_bytes -gt 1024 ]; then
+            tx_display=$(awk "BEGIN {printf \"%5.1f\", $tx_bytes/1024}")
+            tx_unit="KB/s"
+        else
+            tx_display=$(awk "BEGIN {printf \"%5.0f\", $tx_bytes}")
+            tx_unit=" B/s"
+        fi
+
+        network=" ${rx_display}${rx_unit}↓  ${tx_display}${tx_unit}↑"
+    else
+        network="   0.0 B/s↓    0.0 B/s↑"
+    fi
+else
+    network="N/A"
+fi
+
+# Get disk usage for root filesystem
+if command -v df >/dev/null 2>&1; then
+    disk_usage=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
+else
+    disk_usage="N/A"
+fi
+
+# Get load average and process count with fixed width
+load_avg=$(cat /proc/loadavg | awk '{printf "%3.1f", $1}')
+process_count=$(printf "%3d" $(ps aux | wc -l))
+
+# Get uptime in hours:minutes with fixed width
+uptime_seconds=$(cat /proc/uptime | awk '{print int($1)}')
+uptime_hours=$((uptime_seconds / 3600))
+uptime_minutes=$(((uptime_seconds % 3600) / 60))
+uptime_formatted="$(printf "%2d" $uptime_hours):$(printf "%02d" $uptime_minutes)"
+
+# Create main system info cache file
+cat > "$CACHE_FILE" <<EOF
+{
+  "cpu": "$cpu_usage%",
+  "temperature": "$temp",
+  "memory": "$mem_percent%",
+  "network": "$network",
+  "storage": "$disk_usage%"
+}
+EOF
+
+# Create system processes cache file
+cat > "$SYSTEM_CACHE_FILE" <<EOF
+{
+  "load_avg": "$load_avg",
+  "processes": "$process_count",
+  "uptime": "$uptime_formatted"
+}
+EOF

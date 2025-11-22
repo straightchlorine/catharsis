@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Handle toggle action
+if [ "$1" = "toggle" ]; then
+    pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    pkill -RTMIN+8 waybar
+    exit 0
+fi
+
+# Get default source (microphone)
+muted=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+
+if [ "$muted" = "yes" ]; then
+    echo '{"text": "", "class": "muted"}'
+else
+    echo '{"text": "", "class": "unmuted"}'
+fi

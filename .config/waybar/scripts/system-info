@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Cache file location
+CACHE_FILE="$HOME/.cache/system-info.json"
+
+# Check if cache file exists
+if [ ! -f "$CACHE_FILE" ]; then
+    echo "System info unavailable"
+    exit 1
+fi
+
+# Read from cache
+cpu=$(jq -r '.cpu' "$CACHE_FILE" 2>/dev/null)
+temp=$(jq -r '.temperature' "$CACHE_FILE" 2>/dev/null)
+memory=$(jq -r '.memory' "$CACHE_FILE" 2>/dev/null)
+
+# Display with icons: CPU | Temp | RAM
+echo "$temp   $cpu   $memory"

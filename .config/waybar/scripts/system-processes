@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Cache file location
+CACHE_FILE="$HOME/.cache/system-processes.json"
+
+# Check if cache file exists
+if [ ! -f "$CACHE_FILE" ]; then
+    echo "System processes unavailable"
+    exit 1
+fi
+
+# Read from cache
+load_avg=$(jq -r '.load_avg' "$CACHE_FILE" 2>/dev/null)
+processes=$(jq -r '.processes' "$CACHE_FILE" 2>/dev/null)
+uptime=$(jq -r '.uptime' "$CACHE_FILE" 2>/dev/null)
+
+# Display with icons: Load Average | Storage | Processes | Uptime
+storage=$(jq -r '.storage' ~/.cache/system-info.json 2>/dev/null)
+echo "󰓅 $load_avg   $storage   $processes   $uptime"

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Use the main system-info script for tooltip
+~/.config/waybar/scripts/system-info tooltip
