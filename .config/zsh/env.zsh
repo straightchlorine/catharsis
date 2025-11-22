@@ -1,29 +1,43 @@
-path+=($HOME/.venv/lib)
-path+=($HOME/.cache/yay/eww/target/release)
-path+=($HOME/.local/bin)
-path+=(/opt/flutter/bin)
-export PATH
+export MOZ_ENABLE_WAYLAND=1
 
 export TERMINAL="kitty"
 export TERM="xterm-256color"
 
-export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
-export STARSHIP_CACHE=$HOME/.config/starship/cache
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 
-export SUDO_PROMPT="password: "
+export LANG="en_US.UTF-8"
+export LC_COLLATE="C.UTF-8"
 
-export BROWSER="firefox"
+export GPG_TTY=$(tty)
+export SUDO_PROMPT="> password: "
+
+export ZEIT_DB="$HOME/.local/share/zeit/db"
+
+export BROWSER="librewolf"
+
 export VISUAL="nvim"
 export EDITOR="nvim"
 
 export GOPATH=$HOME/.local/go
+export SCIKIT_LEARN_DATA=$HOME/.scikit_learn
+export PYTHONPATH="$PYTHONPATH:$HOME/code/:$HOME/.pyenv/"
 
-# commit sign prompt
-export GPG_TTY=$(tty)
+# arduino pahts
+export ARDUINO_LIB=$HOME/Arduino/libraries/
+export ARDUINO_PKG=$HOME/.arduino15/packages/
 
 # rustup shell setup
 . $HOME/.cargo/env
 
+# python
+alias venv="source .venv/bin/activate"
+
+# pyenv setup
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# conda setup
 __conda_setup="$('$HOME/.local/share/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -34,41 +48,4 @@ else
         export PATH="$HOME/.local/share/anaconda/bin:$PATH"
     fi
 fi
-unset __conda_setup 
-
-# please completion
-source <(plz --completion_script)
-
-# Following variables are utilised by neovim config in order to provide full
-# support for development in Java. That involves language servers and debugging.
-#
-# If you do not need such functionality or you have your own configuration,
-# feel free to remove all of the following lines after this comment.
-
-# ~~ neovim java support auxiliary variables ~~
-
-# Set it to the path where you have groovy-language-server-all.jar file.
-# typically something like this:
-# groovy-language-server/build/libs/groovy-language-server-all.jar"
-export GROOVY_LANGUAGE_SERVER=""
-
-# Set it to the path where you have gradle-language-server script.
-# typically something like this:
-# ../vscode-gradle/gradle-language-server/build/install/gradle-language-server/bin/gradle-language-server
-export GRADLE_LANGUAGE_SERVER=""
-
-# For exact configuration, please refer to:
-# https://github.com/mfussenegger/nvim-jdtls
-export JDTLS_ECLIPSE_EQUINOX_LAUNCHER_PLUGIN=""
-export JDTLS_SYSTEM_CONFIGURATION=""
-export JDTLS_WORKSPACE=""
-
-# Set to the path where you have downloaded java-debug plugin.
-# typically something like this:
-# ../java-debug/com.microsoft.java.debug.plugin/target
-export JAVA_DEBUG_PLUGIN=""
-
-# set to the path where you have downloaded vscode-java-test plugin.
-# typically something like this:
-# ../vscode-java-test/server
-export JAVA_TEST_RUNNER_PLUGIN=""
+unset __conda_setup
