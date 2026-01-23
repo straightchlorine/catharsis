@@ -1,0 +1,110 @@
+[global]
+    monitor = 0
+    follow = mouse
+    width = (300, 400)
+    height = (0, 300)
+    origin = top-right
+    offset = (20, 60)
+    scale = 1.5
+    notification_limit = 20
+    
+    progress_bar = true
+    progress_bar_height = 8
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 300
+    progress_bar_max_width = 400
+    
+    indicate_hidden = yes
+    transparency = 10
+    separator_height = 2
+    padding = 8
+    horizontal_padding = 12
+    text_icon_padding = 8
+    frame_width = 1
+    frame_color = "#7aa2f7"
+    separator_color = frame
+    sort = yes
+    
+    font = "JetBrains Mono 10"
+    line_height = 2
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = 60
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
+    
+    enable_recursive_icon_lookup = true
+    icon_theme = "Adwaita"
+    icon_position = left
+    min_icon_size = 16
+    max_icon_size = 24
+    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:/usr/share/icons/Papirus/32x32/apps/
+    
+    sticky_history = yes
+    history_length = 20
+    
+    dmenu = /usr/bin/rofi -dmenu -p dunst:
+    browser = /usr/bin/xdg-open
+    
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    corner_radius = 6
+    ignore_dbusclose = false
+    
+    force_xwayland = false
+    force_xinerama = false
+    
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+[experimental]
+    per_monitor_dpi = false
+
+[urgency_low]
+    background = "#1a1b26"
+    foreground = "#c0caf5"
+    frame_color = "#565f89"
+    timeout = 5
+    default_icon = dialog-information
+
+[urgency_normal]
+    background = "#1a1b26"
+    foreground = "#c0caf5"
+    frame_color = "#7aa2f7"
+    timeout = 8
+    default_icon = dialog-information
+
+[urgency_critical]
+    background = "#292e42"
+    foreground = "#f7768e"
+    frame_color = "#f7768e"
+    timeout = 0
+    default_icon = dialog-warning
+
+[discord]
+    appname = discord
+    background = "#5865f2"
+    foreground = "#ffffff"
+    frame_color = "#5865f2"
+    timeout = 10
+
+[spotify]
+    appname = Spotify
+    background = "#1db954"
+    foreground = "#ffffff"
+    frame_color = "#1db954"
+    timeout = 5
+
+[system]
+    appname = "System"
+    background = "#ff9e64"
+    foreground = "#1a1b26"
+    frame_color = "#ff9e64"
+    timeout = 10
