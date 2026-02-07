@@ -1,10 +1,20 @@
-/* Waybar Color Scheme - Blackish/Reddish/Pinkish */
+/*
+ * Waybar Color Palette
+ * Dark theme with muted accents
+ * All colors are solid (no transparency)
+ */
 
-/* Base colors */
-@define-color base-bg rgba(25, 25, 30, 0.85);
-@define-color widget-bg rgba(40, 35, 38, 0.5);
+/* === BASE COLORS === */
+@define-color bg-primary #191d1e;
+@define-color bg-secondary #282326;
+@define-color bg-tertiary #282828;
 
-/* Accent colors - muted reddish/pinkish tones */
+/* === INTERACTIVE STATES === */
+@define-color interactive-hover #464646;
+@define-color interactive-focused #464646;
+@define-color interactive-urgent #643c4c;
+
+/* === ACCENT COLORS === */
 @define-color accent-red #8b6b6b;
 @define-color accent-pink #9b7b8b;
 @define-color accent-rose #8b6b7b;
@@ -12,18 +22,34 @@
 @define-color accent-burgundy #8b5b6b;
 @define-color accent-wine #7b5b6b;
 
-/* Text colors */
+/* === TEXT COLORS === */
 @define-color text-primary #e0e0e0;
 @define-color text-secondary #d0d0d0;
 @define-color text-muted #b0b0b0;
+@define-color text-bright #ffffff;
 
-/* Status colors - muted */
+/* === STATUS COLORS === */
 @define-color status-good #7b9b7b;
 @define-color status-warning #9b8b6b;
 @define-color status-critical #9b6b6b;
 @define-color status-info #6b7b8b;
 
-/* Workspace colors */
-@define-color workspace-bg rgba(40, 35, 40, 0.5);
-@define-color workspace-focused rgba(70, 60, 70, 0.6);
-@define-color workspace-urgent rgba(100, 60, 70, 0.8);
+/* === CALENDAR COLORS (for tooltip) === */
+@define-color calendar-months #ff6699;
+@define-color calendar-days #cdd6f4;
+@define-color calendar-weekdays #7CD37C;
+@define-color calendar-today #ffcc66;
+
+/* === WORKSPACE COLORS === */
+@define-color workspace-bg #282828;
+@define-color workspace-focused #464646;
+@define-color workspace-urgent #643c4c;
+
+/*
+ * USAGE IN CONFIG:
+ * Colors.css defines all CSS variables
+ * Style.css uses @define-color variables
+ * Config.jsonc uses hardcoded hex (no CSS variable support in JSON)
+ *
+ * For consistency, update config.jsonc calendar colors if theme changes
+ */
