@@ -33,28 +33,37 @@
     }
   },
   "clock": {
-    "format": "{:%d %b, %H:%M}",
+    "format": "{:%H:%M}",
     "interval": 60,
-    "tooltip-format": "<span>{calendar}</span>",
+    "tooltip-format": "<big><b>{:%A, %d %B %Y}</b></big>\n\n<tt><span font='14'>{calendar}</span></tt>",
     "calendar": {
       "mode": "month",
+      "mode-mon-col": 4,
       "week-start": "sun",
       "format": {
         "months": "<span color='#ff6699'><b>{}</b></span>",
         "days": "<span color='#cdd6f4'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
         "weekdays": "<span color='#7CD37C'><b>{}</b></span>",
         "today": "<span color='#ffcc66'><b>{}</b></span>"
       }
+    },
+    "actions": {
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+      "on-click-right": "mode"
     }
   },
   "network": {
     "format": "{icon} {ifname}",
     "format-wifi": " {essid}",
-    "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+    "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n\n {bandwidthDownBytes}\n\n {bandwidthUpBytes}\n\n {bandwidthTotalBytes}",
     "format-linked": "󰈀 {ifname}",
-    "format-ethernet": "󰈀 {ifname}",
+    "format-ethernet": "󰌘",
     "format-disconnected": "󰌙",
-    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    // "format-alt": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+    "on-click": "kitty -e sh -c 'nethogs';",
+    "on-click-right": "kitty -e sh -c 'btop';"
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
@@ -66,6 +75,7 @@
     "format-icons": {
       "default": ["", "󰖀", "󰕾"]
     },
+    "tooltip-format": "{format_source}",
     "on-click": "pavucontrol"
   },
   "backlight": {
@@ -82,7 +92,8 @@
     "format-charging": "󱐋 {capacity}%",
     "format-plugged": "󱐥 {capacity}%",
     "format-alt": "{icon} {time}",
-    "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"]
+    "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"],
+    "tooltip-format": "{icon} {capacity}%\n {time} remaining\n {cycles}\n {health}"
   },
   "custom/mic-status": {
     "format": "{}",
