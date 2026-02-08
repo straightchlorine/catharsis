@@ -33,7 +33,7 @@
     }
   },
   "clock": {
-    "format": "{:%H:%M  %A, %d %B}",
+    "format": "{:%d %b, %H:%M}",
     "interval": 60,
     "tooltip-format": "<span>{calendar}</span>",
     "calendar": {
@@ -48,9 +48,11 @@
     }
   },
   "network": {
+    "format": "{icon} {ifname}",
     "format-wifi": " {essid}",
     "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
     "format-linked": "󰈀 {ifname}",
+    "format-ethernet": "󰈀 {ifname}",
     "format-disconnected": "󰌙",
     "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
