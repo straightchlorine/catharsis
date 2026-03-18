@@ -1,0 +1,39 @@
+# Variables used by Sway environment
+
+# keys
+set $mod Mod4
+set $alt Mod1
+set $super Mod3
+set $ctrl Control
+set $shift Shift
+
+# navigation
+set $left h
+set $down j
+set $up k
+set $right l
+
+# applications
+set $terminal kitty
+set $browser MOZ_ENABLE_WAYLAND=1 librewolf
+set $launcher $HOME/.config/rofi/launchers/type-4/launcher.sh
+set $filemanager thunar
+set $editor nvim
+set $locker waylock
+
+# screenshot command
+set $screenshot_dir ~/screenshots
+set $screenshot_area ~/.config/sway/scripts/screenshot area
+set $screenshot_copy ~/.config/sway/scripts/screenshot area-copy
+set $screenshot_full ~/.config/sway/scripts/screenshot full
+
+# scripts
+set $scripts_dir ~/.config/sway/scripts
+
+# waydroid
+set $waydroid_start ~/.config/sway/scripts/waydroid-start
+set $waydroid_horizontal ~/.config/sway/scripts/waydroid-resize horizontal
+set $waydroid_vertical ~/.config/sway/scripts/waydroid-resize vertical
+
+# audio
+set $mic_toggle ~/.config/sway/scripts/audio-control mic-mute

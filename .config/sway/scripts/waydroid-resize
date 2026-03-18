@@ -1,0 +1,36 @@
+#!/bin/bash
+
+##
+# Waydroid resize script for phone-like resolutions
+##
+
+case "$1" in
+    "horizontal"|"landscape")
+        echo "Setting Waydroid to horizontal phone resolution (1910x955)"
+        notify-send "Waydroid" "Setting horizontal resolution (1910x955)"
+        waydroid prop set persist.waydroid.width 1910
+        waydroid prop set persist.waydroid.height 955
+        ;;
+    "vertical"|"portrait")
+        echo "Setting Waydroid to vertical phone resolution (720x1280)"
+        notify-send "Waydroid" "Setting vertical resolution (720x1280)"
+        waydroid prop set persist.waydroid.width 720
+        waydroid prop set persist.waydroid.height 1280
+        ;;
+    *)
+        echo "Usage: $0 [horizontal|vertical]"
+        echo "  horizontal: 1280x720 (16:9 landscape)"
+        echo "  vertical:   720x1280 (9:16 portrait)"
+        exit 1
+        ;;
+esac
+
+echo "Restarting Waydroid session to apply changes..."
+notify-send "Waydroid" "Stopping session..."
+waydroid session stop
+sleep 1
+notify-send "Waydroid" "Starting session with new resolution..."
+waydroid session start
+notify-send "Waydroid" "Session restarted successfully!"
+
+exit 0

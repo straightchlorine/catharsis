@@ -31,6 +31,14 @@
 !.config/
 !.config/nvim/
 
+# add sway config
+!.config/sway
+!.config/sway/**
+
+# add yazi config
+!.config/yazi
+!.config/yazi/keymap.toml
+
 # add kitty config
 !.config/kitty
 !.config/kitty/kitty.conf

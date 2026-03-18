@@ -1,0 +1,13 @@
+# Keybidings to the scripts
+
+bindsym $mod+$shift+s exec $screenshot_copy
+bindsym $mod+s exec $screenshot_area
+bindsym Print exec $screenshot_full
+bindsym $mod+$shift+w exec $work_tools
+bindsym $mod+$shift+r exec $waydroid_start
+bindsym $mod+$shift+o exec $waydroid_horizontal
+bindsym $mod+$shift+v exec $waydroid_vertical
+bindsym $mod+m exec $mic_toggle
+
+# system info
+bindsym $mod+i exec ~/.local/bin/quick-stats

@@ -8,10 +8,12 @@
 
 ## About
 
+- **sway** - compositor config (keybindings, rules, theme, autostart)
 - **zsh** - shell config, aliases, paths, plugins
 - **kitty** - terminal emulator, wallpaper-matched color scheme
 - **waybar** - bar config (legacy scripts still present, will likely be removed)
 - **dunst** - notification daemon
+- **yazi** - file manager keybindings
 - **zathura** - PDF viewer
 - **nvim** - Neovim config (git submodule, hosted on Codeberg)
 

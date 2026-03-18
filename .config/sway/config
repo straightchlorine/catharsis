@@ -1,0 +1,18 @@
+# Main sway configuration
+
+include ~/.config/sway/variables
+
+include ~/.config/sway/input
+include ~/.config/sway/output
+
+include ~/.config/sway/workspaces
+
+include ~/.config/sway/rules
+
+include ~/.config/sway/keybindings
+include ~/.config/sway/autostart
+
+include ~/.config/sway/theme
+
+# Waydroid window - simulate phone landscape, match waybar width
+for_window [app_id="Waydroid"] floating enable, resize set 1910 955, move position center, move to workspace 8, move to output DP-2

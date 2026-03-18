@@ -1,0 +1,11 @@
+# Layout related bindings
+
+# layout management
+bindsym $mod+space layout toggle split tabbed
+bindsym $mod+$shift+space layout toggle split
+bindsym $mod+Tab floating toggle
+bindsym $mod+$ctrl+Tab floating toggle
+
+# minimization
+bindsym $mod+n move scratchpad
+bindsym $mod+$ctrl+n scratchpad show

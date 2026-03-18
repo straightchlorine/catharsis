@@ -1,0 +1,34 @@
+# Autostart applications
+
+# polkit authentication agent
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# for screen sharing
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+
+exec_always /usr/lib/xdg-desktop-portal -r
+exec_always /usr/lib/xdg-desktop-portal-wlr -r
+
+# status bar
+exec_always --no-startup-id waybar
+
+# notification daemon
+exec_always --no-startup-id dunst
+
+# screen locking
+exec swayidle -w \
+    timeout 300 'waylock -f -c 000000' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'waylock -f -c 000000'
+
+# network applet
+exec nm-applet --indicator
+
+# create screenshot directory
+exec mkdir -p $screenshot_dir
+
+# wallpaper
+exec_always --no-startup-id swaybg -i ~/.config/wallpaper -m fill

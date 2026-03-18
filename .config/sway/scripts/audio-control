@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Audio control script with notifications
+# Usage: audio-control [speaker-mute|mic-mute|volume-up|volume-down]
+
+case "$1" in
+    "speaker-mute")
+        # Toggle speaker mute
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+        # Check if muted and send appropriate notification
+        if pactl get-sink-mute @DEFAULT_SINK@ | grep -q "yes"; then
+            notify-send "Audio" "Speaker muted" -t 2000 -h string:x-canonical-private-synchronous:audio -i audio-volume-muted
+        else
+            notify-send "Audio" "Speaker unmuted" -t 2000 -h string:x-canonical-private-synchronous:audio -i audio-volume-high
+        fi
+        ;;
+
+    "mic-mute")
+        # Toggle microphone mute
+        pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+        # Update waybar
+        pkill -RTMIN+8 waybar
+
+        # Check if muted and send appropriate notification
+        if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q "yes"; then
+            notify-send "Microphone" "Microphone muted" -t 2000 -h string:x-canonical-private-synchronous:mic -i microphone-sensitivity-muted
+        else
+            notify-send "Microphone" "Microphone unmuted" -t 2000 -h string:x-canonical-private-synchronous:mic -i microphone-sensitivity-high
+        fi
+        ;;
+
+    "volume-up")
+        # Increase volume
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+        # Get current volume percentage
+        VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '\d+(?=%)' | head -1)
+        notify-send "Volume" "Volume: ${VOLUME}%" -t 1500 -h string:x-canonical-private-synchronous:volume -h int:value:$VOLUME -i audio-volume-high
+        ;;
+
+    "volume-down")
+        # Decrease volume
+        pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+        # Get current volume percentage
+        VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '\d+(?=%)' | head -1)
+        notify-send "Volume" "Volume: ${VOLUME}%" -t 1500 -h string:x-canonical-private-synchronous:volume -h int:value:$VOLUME -i audio-volume-low
+        ;;
+
+    *)
+        echo "Usage: $0 [speaker-mute|mic-mute|volume-up|volume-down]"
+        exit 1
+        ;;
+esac

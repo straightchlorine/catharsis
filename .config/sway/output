@@ -1,0 +1,6 @@
+# Output configuration
+
+
+output DP-3 pos 1080 0 mode 1920x1080@165Hz
+output DP-1 pos 3000 0 mode 3840x2160@144Hz
+output DP-2 pos 6840 0 mode 1920x1080@144Hz

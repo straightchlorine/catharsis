@@ -1,0 +1,15 @@
+# Keybindings
+
+# elementary controls
+bindsym $mod+q kill
+bindsym $mod+f fullscreen
+bindsym $mod+c move position center
+
+# running applications
+bindsym $mod+Return exec $terminal
+bindsym $mod+r exec $launcher
+bindsym $mod+w exec $browser
+bindsym $mod+$shift+$alt+l exec $locker
+
+# include other bindings
+include ~/.config/sway/keybindings.d/*

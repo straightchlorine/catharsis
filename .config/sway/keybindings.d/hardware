@@ -1,0 +1,16 @@
+# Contains hardware related controls
+
+# brightness
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+ -q
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%- -q
+
+# volume
+bindsym XF86AudioRaiseVolume exec ~/.config/sway/scripts/audio-control volume-up
+bindsym XF86AudioLowerVolume exec ~/.config/sway/scripts/audio-control volume-down
+bindsym XF86AudioMute exec ~/.config/sway/scripts/audio-control speaker-mute
+
+# media
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+

@@ -1,0 +1,50 @@
+# Window rules
+
+# floating rules
+for_window [window_role = "pop-up"] floating enable
+for_window [window_role = "bubble"] floating enable
+for_window [window_role = "dialog"] floating enable
+for_window [window_type = "dialog"] floating enable
+for_window [window_role = "task_dialog"] floating enable
+for_window [window_type = "menu"] floating enable
+for_window [app_id = "floating"] floating enable
+for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
+for_window [class = "(?i)pinentry"] floating enable
+for_window [title = "Administrator privileges required"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="blueman-manager"] floating enable
+for_window [title="^Picture-in-Picture$"] floating enable, sticky enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+for_window [title = "About Mozilla Firefox"] floating enable
+for_window [window_role = "About"] floating enable
+for_window [app_id="firefox" title="Library"] floating enable, border pixel 1, sticky enable
+
+for_window [title = "Firefox - Sharing Indicator"] kill
+for_window [title = "Firefox — Sharing Indicator"] kill
+
+for_window [class="^steam$" title="^Friends$"] floating enable
+for_window [class="^steam$" title="Steam - News"] floating enable
+for_window [class="^steam$" title=".* - Chat"] floating enable
+for_window [class="^steam$" title="^Settings$"] floating enable
+for_window [class="^steam$" title=".* - event started"] floating enable
+for_window [class="^steam$" title=".* CD key"] floating enable
+for_window [class="^steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
+
+# workspace assignments
+
+# Communication apps - Monitor 3 (DP-3) - ctrl modifier
+for_window [app_id="Slack"] move to workspace $ws3_1
+for_window [class="^discord$"] move to workspace $ws3_2
+
+# Email - Monitor 3 (DP-3) 
+for_window [app_id="thunderbird"] move to workspace $ws3_3
+
+# Gaming - Monitor 2 (DP-2) - alt modifier, last workspace
+for_window [class="^steam$"] move to workspace $ws2_9
+
+# Waydroid rules moved to main config
