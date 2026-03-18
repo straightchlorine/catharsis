@@ -9,5 +9,7 @@ path+=($HOME/.local/bin)
 path+=($HOME/.local/share/matlab/bin)
 path+=($HOME/.duckdb/cli/latest)
 path+=(/opt/flutter/bin)
+path+=($HOME/.dotnet/tools)
+path+=(/usr/lib/jvm/java-25-openjdk/bin/javac)
 
 export PATH

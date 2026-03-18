@@ -57,3 +57,5 @@ alias aclill="arduino-cli lib list"
 alias aclili="arduino-cli lib install"
 alias aclils="arduino-cli lib search"
 alias aclinodemcu="arduino-cli board attach -b esp8266:esp8266:nodemcu -p"
+
+alias nsnetwork="sudo ss -tup"

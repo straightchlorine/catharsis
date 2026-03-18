@@ -18,9 +18,8 @@ source $ZDOTDIR/keys.zsh
 source $ZDOTDIR/dev.zsh
 source $ZDOTDIR/aliases.zsh
 
-# autojump setup
-[[ -s "$HOME/.autojump/etc/profile.d/autojump.sh" ]] && \
-  source "$HOME/.autojump/etc/profile.d/autojump.sh"
+# bun completions
+[ -s "/home/zweiss/.bun/_bun" ] && source "/home/zweiss/.bun/_bun"
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="gallois"
@@ -35,7 +34,6 @@ plugins=(
   ansible
   archlinux
   arduino-cli
-  autojump
   aws
   azure
   bazel
