@@ -1,20 +1,20 @@
 /*
- * Waybar Color Palette
- * Warm dark theme derived from wallpaper
- * All colors are solid (no transparency)
+ * waybar color palette
+ * warm dark theme derived from wallpaper
+ * all colors are solid (no transparency)
  */
 
-/* === BASE COLORS === */
+/* ---- base colors ---- */
 @define-color bg-primary #281C21;
 @define-color bg-secondary #3C3344;
 @define-color bg-tertiary #332530;
 
-/* === INTERACTIVE STATES === */
+/* ---- interactive states ---- */
 @define-color interactive-hover #5A3653;
 @define-color interactive-focused #5A3653;
 @define-color interactive-urgent #8F374E;
 
-/* === ACCENT COLORS === */
+/* ---- accent colors ---- */
 @define-color accent-red #D5686E;
 @define-color accent-pink #CC7282;
 @define-color accent-rose #9A5669;
@@ -24,34 +24,34 @@
 @define-color accent-peach #E08F76;
 @define-color accent-salmon #F6AB8E;
 
-/* === TEXT COLORS === */
+/* ---- text colors ---- */
 @define-color text-primary #e8d0c4;
 @define-color text-secondary #d4b8ac;
 @define-color text-muted #9A8580;
 @define-color text-bright #f5e6dd;
 
-/* === STATUS COLORS === */
+/* ---- status colors ---- */
 @define-color status-good #7b9b7b;
 @define-color status-warning #E08F76;
 @define-color status-critical #D5686E;
 @define-color status-info #6B4C60;
 
-/* === CALENDAR COLORS (for tooltip) === */
+/* ---- calendar colors (for tooltip) ---- */
 @define-color calendar-months #CC7282;
 @define-color calendar-days #e8d0c4;
 @define-color calendar-weekdays #7b9b7b;
 @define-color calendar-today #F6AB8E;
 
-/* === WORKSPACE COLORS === */
+/* ---- workspace colors ---- */
 @define-color workspace-bg #332530;
 @define-color workspace-focused #5A3653;
 @define-color workspace-urgent #8F374E;
 
 /*
- * USAGE IN CONFIG:
- * Colors.css defines all CSS variables
- * Style.css uses @define-color variables
- * Config.jsonc uses hardcoded hex (no CSS variable support in JSON)
+ * usage in config:
+ * colors.css defines all css variables
+ * style.css uses @define-color variables
+ * config.jsonc uses hardcoded hex (no css variable support in json)
  *
- * For consistency, update config.jsonc calendar colors if theme changes
+ * for consistency, update config.jsonc calendar colors if theme changes
  */
