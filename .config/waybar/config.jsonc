@@ -41,11 +41,11 @@
       "mode-mon-col": 4,
       "week-start": "sun",
       "format": {
-        "months": "<span color='#ff6699'><b>{}</b></span>",
-        "days": "<span color='#cdd6f4'><b>{}</b></span>",
-        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
-        "weekdays": "<span color='#7CD37C'><b>{}</b></span>",
-        "today": "<span color='#ffcc66'><b>{}</b></span>"
+        "months": "<span color='#CC7282'><b>{}</b></span>",
+        "days": "<span color='#e8d0c4'><b>{}</b></span>",
+        "weeks": "<span color='#9A5669'><b>W{}</b></span>",
+        "weekdays": "<span color='#7b9b7b'><b>{}</b></span>",
+        "today": "<span color='#F6AB8E'><b>{}</b></span>"
       }
     },
     "actions": {

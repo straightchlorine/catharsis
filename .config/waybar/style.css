@@ -32,7 +32,7 @@ window#waybar.hidden {
 #workspaces button {
   padding: 0px 8px;
   background-color: transparent;
-  color: #d8d8d8;
+  color: @text-secondary;
   margin: 0px;
   border-radius: 0px;
   transition: none;
@@ -163,7 +163,7 @@ window#waybar.hidden {
 
 /* Tooltip styling - remove transparency */
 tooltip {
-  background-color: #0a0a0b;
+  background-color: #1e1319;
   color: @text-primary;
   border: none;
   padding: 20px;
@@ -176,12 +176,12 @@ tooltip label {
 
 tooltip > box {
   padding: 30px;
-  background-color: #0a0a0b;
+  background-color: #1e1319;
 }
 
 /* Calendar styling */
 calendar {
-  background-color: #0a0a0b;
+  background-color: #1e1319;
   color: @text-primary;
   font-size: 13px;
   margin: 0;

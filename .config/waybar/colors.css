@@ -1,49 +1,51 @@
 /*
  * Waybar Color Palette
- * Dark theme with muted accents
+ * Warm dark theme derived from wallpaper
  * All colors are solid (no transparency)
  */
 
 /* === BASE COLORS === */
-@define-color bg-primary #191d1e;
-@define-color bg-secondary #282326;
-@define-color bg-tertiary #282828;
+@define-color bg-primary #281C21;
+@define-color bg-secondary #3C3344;
+@define-color bg-tertiary #332530;
 
 /* === INTERACTIVE STATES === */
-@define-color interactive-hover #464646;
-@define-color interactive-focused #464646;
-@define-color interactive-urgent #643c4c;
+@define-color interactive-hover #5A3653;
+@define-color interactive-focused #5A3653;
+@define-color interactive-urgent #8F374E;
 
 /* === ACCENT COLORS === */
-@define-color accent-red #8b6b6b;
-@define-color accent-pink #9b7b8b;
-@define-color accent-rose #8b6b7b;
-@define-color accent-mauve #7b6b8b;
-@define-color accent-burgundy #8b5b6b;
-@define-color accent-wine #7b5b6b;
+@define-color accent-red #D5686E;
+@define-color accent-pink #CC7282;
+@define-color accent-rose #9A5669;
+@define-color accent-mauve #6B4C60;
+@define-color accent-burgundy #8F374E;
+@define-color accent-wine #512425;
+@define-color accent-peach #E08F76;
+@define-color accent-salmon #F6AB8E;
 
 /* === TEXT COLORS === */
-@define-color text-primary #e0e0e0;
-@define-color text-secondary #d0d0d0;
-@define-color text-muted #b0b0b0;
-@define-color text-bright #ffffff;
+@define-color text-primary #e8d0c4;
+@define-color text-secondary #d4b8ac;
+@define-color text-muted #9A8580;
+@define-color text-bright #f5e6dd;
 
 /* === STATUS COLORS === */
 @define-color status-good #7b9b7b;
-@define-color status-warning #9b8b6b;
-@define-color status-critical #9b6b6b;
-@define-color status-info #6b7b8b;
+@define-color status-warning #E08F76;
+@define-color status-critical #D5686E;
+@define-color status-info #6B4C60;
 
 /* === CALENDAR COLORS (for tooltip) === */
-@define-color calendar-months #ff6699;
-@define-color calendar-days #cdd6f4;
-@define-color calendar-weekdays #7CD37C;
-@define-color calendar-today #ffcc66;
+@define-color calendar-months #CC7282;
+@define-color calendar-days #e8d0c4;
+@define-color calendar-weekdays #7b9b7b;
+@define-color calendar-today #F6AB8E;
 
 /* === WORKSPACE COLORS === */
-@define-color workspace-bg #282828;
-@define-color workspace-focused #464646;
-@define-color workspace-urgent #643c4c;
+@define-color workspace-bg #332530;
+@define-color workspace-focused #5A3653;
+@define-color workspace-urgent #8F374E;
 
 /*
  * USAGE IN CONFIG:
