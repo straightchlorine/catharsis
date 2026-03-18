@@ -10,6 +10,9 @@ alias cp="cp -i"
 alias rm="rm -i"
 alias cd="z"
 
+alias conn_tailscale="sudo rc-service tailscale start && sudo tailscale up --accept-routes"
+alias disconn_tailscale="sudo rc-service tailscale stop && sudo tailscale down"
+
 alias mirrors="sudo reflector -c poland -c germany -l 20 -p https --age 12 --sort rate --save /etc/pacman.d/mirrorlist"
 
 # file system
@@ -59,3 +62,8 @@ alias aclils="arduino-cli lib search"
 alias aclinodemcu="arduino-cli board attach -b esp8266:esp8266:nodemcu -p"
 
 alias nsnetwork="sudo ss -tup"
+
+alias gupd='sudo emaint --auto sync && sudo emerge --ask --update --deep --newuse @world'
+alias gcfg='sudo dispatch-conf'
+alias prog='genlop -c'
+alias gup='sudo emerge --ask --depclean && sudo eclean-dist --deep'
