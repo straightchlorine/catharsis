@@ -21,7 +21,6 @@
     horizontal_padding = 10
     text_icon_padding = 6
     frame_width = 1
-    frame_color = "#9A5669"
     separator_color = frame
     sort = yes
 
@@ -66,23 +65,15 @@
 [experimental]
     per_monitor_dpi = false
 
+# colors managed by colorgen via dunstrc.d/99-colors.conf
 [urgency_low]
-    background = "#281C21"
-    foreground = "#e8d0c4"
-    frame_color = "#5A3653"
     timeout = 5
     default_icon = dialog-information
 
 [urgency_normal]
-    background = "#281C21"
-    foreground = "#e8d0c4"
-    frame_color = "#9A5669"
     timeout = 8
     default_icon = dialog-information
 
 [urgency_critical]
-    background = "#3C3344"
-    foreground = "#D5686E"
-    frame_color = "#D5686E"
     timeout = 0
     default_icon = dialog-warning

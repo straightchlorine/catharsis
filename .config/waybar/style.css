@@ -1,3 +1,4 @@
+@import url("colors/wallpaper-dark.css");
 @import "colors.css";
 
 * {
@@ -11,8 +12,8 @@
 }
 
 window#waybar {
-  background-color: @bg-primary;
-  color: @text-primary;
+  background-color: @background;
+  color: @foreground;
   border-radius: 0px;
   padding: 2px 0px;
   box-shadow: none;
@@ -25,129 +26,129 @@ window#waybar.hidden {
 /* Workspaces */
 #workspaces {
   margin: 0px;
-  background-color: @bg-tertiary;
+  background-color: @color1;
   padding: 0px;
 }
 
 #workspaces button {
   padding: 0px 8px;
   background-color: transparent;
-  color: @text-secondary;
+  color: @color7;
   margin: 0px;
   border-radius: 0px;
   transition: none;
 }
 
 #workspaces button:hover {
-  background: @workspace-focused;
-  color: @text-primary;
-  box-shadow: inset 0 -2px 0 @accent-pink;
+  background: @color2;
+  color: @foreground;
+  box-shadow: inset 0 -2px 0 @color3;
   transition: none;
 }
 
 #workspaces button.focused {
-  background-color: @workspace-focused;
-  color: @text-primary;
-  box-shadow: inset 0 -2px 0 @accent-rose;
+  background-color: @color2;
+  color: @foreground;
+  box-shadow: inset 0 -2px 0 @color5;
 }
 
 #workspaces button.urgent {
-  background-color: @workspace-urgent;
-  color: @text-primary;
+  background-color: @color5;
+  color: @foreground;
 }
 
 /* Modules */
 #clock {
   padding: 3px 10px;
   margin: 0 6px;
-  background-color: @widget-bg;
-  color: @text-primary;
-  border-bottom: 2px solid @accent-red;
+  background-color: @color0;
+  color: @foreground;
+  border-bottom: 2px solid @color5;
 }
 
 #network {
   padding: 3px 8px;
   margin: 0 0 0 4px;
-  background-color: @widget-bg;
-  color: @text-primary;
-  border-bottom: 2px solid @accent-mauve;
+  background-color: @color0;
+  color: @foreground;
+  border-bottom: 2px solid @color2;
 }
 
 #pulseaudio {
   padding: 3px 8px;
   margin: 0 4px;
-  background-color: @widget-bg;
-  color: @text-primary;
-  border-bottom: 2px solid @accent-burgundy;
+  background-color: @color0;
+  color: @foreground;
+  border-bottom: 2px solid @color3;
 }
 
 #backlight {
   padding: 3px 8px;
   margin: 0 4px;
-  background-color: @widget-bg;
-  color: @text-primary;
-  border-bottom: 2px solid @accent-wine;
+  background-color: @color0;
+  color: @foreground;
+  border-bottom: 2px solid @color4;
 }
 
 #battery {
   padding: 3px 8px;
   margin: 0 4px;
-  background-color: @widget-bg;
-  color: @text-primary;
-  border-bottom: 2px solid @accent-rose;
+  background-color: @color0;
+  color: @foreground;
+  border-bottom: 2px solid @cursor;
 }
 
 #custom-mic-status {
   padding: 3px 8px;
   margin: 0 4px;
-  background-color: @widget-bg;
-  color: @text-primary;
-  border-bottom: 2px solid @accent-wine;
+  background-color: @color0;
+  color: @foreground;
+  border-bottom: 2px solid @color4;
 }
 
 #tray {
   padding: 3px 8px;
   margin: 0 4px;
-  background-color: @widget-bg;
-  border-bottom: 2px solid @accent-pink;
+  background-color: @color0;
+  border-bottom: 2px solid @color3;
 }
 
 /* Status indicators */
 #battery.charging,
 #battery.plugged {
-  color: @status-good;
-  border-bottom: 2px solid @status-good;
+  color: @color6;
+  border-bottom: 2px solid @color6;
 }
 
 #battery.warning:not(.charging) {
-  color: @status-warning;
-  border-bottom: 2px solid @status-warning;
+  color: @cursor;
+  border-bottom: 2px solid @cursor;
 }
 
 #battery.critical:not(.charging) {
-  color: @status-critical;
-  border-bottom: 2px solid @status-critical;
+  color: @color5;
+  border-bottom: 2px solid @color5;
   animation: blink 0.5s linear infinite;
 }
 
 #battery.good:not(.charging) {
-  color: @status-good;
-  border-bottom: 2px solid @status-good;
+  color: @color6;
+  border-bottom: 2px solid @color6;
 }
 
 #network.disconnected {
-  color: @status-critical;
-  border-bottom: 2px solid @status-critical;
+  color: @color5;
+  border-bottom: 2px solid @color5;
 }
 
 #pulseaudio.muted {
-  color: @text-muted;
-  border-bottom: 2px solid @text-muted;
+  color: @color4;
+  border-bottom: 2px solid @color4;
 }
 
 #custom-mic-status.muted {
-  color: @status-critical;
-  border-bottom: 2px solid @status-critical;
+  color: @color5;
+  border-bottom: 2px solid @color5;
 }
 
 /* Simple hover effect */
@@ -157,32 +158,32 @@ window#waybar.hidden {
 #backlight:hover,
 #battery:hover,
 #custom-mic-status:hover {
-  background-color: @interactive-hover;
-  color: @text-bright;
+  background-color: @color2;
+  color: @color15;
 }
 
-/* Tooltip styling - remove transparency */
+/* Tooltip styling */
 tooltip {
-  background-color: #1e1319;
-  color: @text-primary;
+  background-color: @background;
+  color: @foreground;
   border: none;
   padding: 20px;
   opacity: 1;
 }
 
 tooltip label {
-  color: @text-primary;
+  color: @foreground;
 }
 
 tooltip > box {
   padding: 30px;
-  background-color: #1e1319;
+  background-color: @background;
 }
 
 /* Calendar styling */
 calendar {
-  background-color: #1e1319;
-  color: @text-primary;
+  background-color: @background;
+  color: @foreground;
   font-size: 13px;
   margin: 0;
   border: none;
@@ -190,13 +191,13 @@ calendar {
 }
 
 calendar:selected {
-  background-color: @accent-rose;
-  color: @text-bright;
+  background-color: @color5;
+  color: @color15;
 }
 
 @keyframes blink {
   to {
-    color: @accent-red;
-    border-bottom: 2px solid @accent-red;
+    color: @color5;
+    border-bottom: 2px solid @color5;
   }
 }
