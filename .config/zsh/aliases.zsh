@@ -63,7 +63,12 @@ alias aclinodemcu="arduino-cli board attach -b esp8266:esp8266:nodemcu -p"
 
 alias nsnetwork="sudo ss -tup"
 
-alias gupd='sudo emaint --auto sync && sudo emerge --ask --update --deep --newuse @world'
+alias gupd='sudo emaint --auto sync && sudo emerge --ask --update --deep --newuse --backtrack=100 @world'
+alias gpreb='sudo emerge --ask @preserved-rebuild'
 alias gcfg='sudo dispatch-conf'
-alias prog='genlop -c'
 alias gup='sudo emerge --ask --depclean && sudo eclean-dist --deep'
+alias gseq='echo "1. gupd  2. gpreb (if needed)  3. perl-cleaner/python-updater (if needed)  4. gcfg  5. gup"'
+alias prog='genlop -c'
+alias glog='genlop -l | tail -20'
+alias gnews='eselect news read'
+alias gone='sudo emerge --ask --oneshot'
