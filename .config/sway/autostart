@@ -4,10 +4,14 @@
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # for screen sharing
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash systemctl 2>/dev/null && \
+    systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
+exec pipewire
+exec pipewire-pulse
+exec wireplumber
 exec_always /usr/lib/xdg-desktop-portal -r
 exec_always /usr/lib/xdg-desktop-portal-wlr -r
 

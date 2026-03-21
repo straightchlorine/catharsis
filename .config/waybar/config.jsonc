@@ -15,11 +15,11 @@
   ],
   "modules-right": [
     "tray",
-    "battery",
     "backlight",
-    "pulseaudio",
     "custom/mic-status",
-    "network"
+    "pulseaudio",
+    "network",
+    "battery"
   ],
   "sway/workspaces": {
     "disable-scroll": false,
@@ -93,7 +93,7 @@
     "format-plugged": "󱐥 {capacity}%",
     "format-alt": "{icon} {time}",
     "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"],
-    "tooltip-format": "{icon} {capacity}%\n {time} remaining\n {cycles}\n {health}"
+    "tooltip-format": "{capacity}% - {time} remaining"
   },
   "custom/mic-status": {
     "format": "{}",

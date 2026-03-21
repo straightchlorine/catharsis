@@ -11,7 +11,7 @@ alias rm="rm -i"
 alias cd="z"
 
 alias conn_tailscale="sudo rc-service tailscale start && sudo tailscale up --accept-routes"
-alias disconn_tailscale="sudo rc-service tailscale stop && sudo tailscale down"
+alias disconn_tailscale="sudo tailscale down && sudo rc-service tailscale stop"
 
 alias mirrors="sudo reflector -c poland -c germany -l 20 -p https --age 12 --sort rate --save /etc/pacman.d/mirrorlist"
 
