@@ -22,7 +22,7 @@ source $ZDOTDIR/aliases.zsh
 [ -s "/home/zweiss/.bun/_bun" ] && source "/home/zweiss/.bun/_bun"
 
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="af-magic"
+ZSH_THEME="gallois"
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 14
 COMPLETION_WAITING_DOTS="true"
