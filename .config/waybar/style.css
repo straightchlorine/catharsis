@@ -1,5 +1,4 @@
 @import url("colors/wallpaper-dark.css");
-
 * {
   border: none;
   font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
@@ -25,7 +24,7 @@ window#waybar.hidden {
 /* Workspaces */
 #workspaces {
   margin: 0px;
-  background-color: @color1;
+  background-color: @color0;
   padding: 0px;
 }
 
@@ -39,16 +38,16 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-  background: @color2;
+  background: @color0;
   color: @foreground;
-  box-shadow: inset 0 -2px 0 @color3;
+  box-shadow: inset 0 -2px 0 @cursor;
   transition: none;
 }
 
 #workspaces button.focused {
-  background-color: @color2;
+  background-color: @color1;
   color: @foreground;
-  box-shadow: inset 0 -2px 0 @color5;
+  box-shadow: inset 0 -2px 0 @cursor;
 }
 
 #workspaces button.urgent {

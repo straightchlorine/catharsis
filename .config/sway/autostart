@@ -9,9 +9,9 @@ exec hash systemctl 2>/dev/null && \
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
-exec pipewire
-exec pipewire-pulse
-exec wireplumber
+exec sh -c 'pgrep -x pipewire > /dev/null || pipewire'
+exec sh -c 'pgrep -x pipewire-pulse > /dev/null || pipewire-pulse'
+exec sh -c 'pgrep -x wireplumber > /dev/null || wireplumber'
 exec_always /usr/lib/xdg-desktop-portal -r
 exec_always /usr/lib/xdg-desktop-portal-wlr -r
 
