@@ -30,9 +30,6 @@ export ARDUINO_PKG=$HOME/.arduino15/packages/
 # rustup shell setup
 . $HOME/.cargo/env
 
-# python
-alias venv="source .venv/bin/activate"
-
 # pyenv setup
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
