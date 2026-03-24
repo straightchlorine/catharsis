@@ -25,7 +25,7 @@ zinit light-mode for \
   zdharma-continuum/zinit-annex-rust \
   zdharma-continuum/fast-syntax-highlighting \
   hlissner/zsh-autopair \
-  MichaelAquilina/zsh-you-should-use \
+  atload'export YSU_MESSAGE_POSITION="after"; export YSU_HARDCORE=1' MichaelAquilina/zsh-you-should-use \
   zsh-users/zsh-autosuggestions \
   Aloxaf/fzf-tab
 
