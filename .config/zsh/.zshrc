@@ -17,6 +17,7 @@ source $ZDOTDIR/env.zsh
 source $ZDOTDIR/keys.zsh
 source $ZDOTDIR/dev.zsh
 source $ZDOTDIR/aliases.zsh
+source $ZDOTDIR/plugins.zsh
 
 # bun completions
 [ -s "/home/zweiss/.bun/_bun" ] && source "/home/zweiss/.bun/_bun"
@@ -27,6 +28,10 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 14
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' longer yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
 
 plugins=(
   alias-finder
@@ -83,6 +88,8 @@ plugins=(
   vscode
   virtualenv
   zoxide
+  zsh-autosuggestions
+  fast-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh

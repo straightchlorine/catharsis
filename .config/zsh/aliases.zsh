@@ -18,8 +18,9 @@ alias tree='eza -T --color=always'
 alias venv="source .venv/bin/activate"
 
 # --- git ---
-alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
-alias gs="git status"
+alias glo="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
+alias gcl="git clone --depth=1"
+alias gs="git status --short --branch"
 alias ga="git add"
 alias gaa="git add -A"
 alias grs="git restore --staged ."
@@ -64,7 +65,7 @@ alias dsps="docker service ps"
 
 alias dcdu="docker compose down && docker compose up"
 alias dcdru="docker compose down && docker compose build && docker compose up"
-alias dcu="docker compose up"
+alias dcu="docker compose up -d"
 alias dcd="docker compose down"
 
 # --- arduino ---

@@ -27,6 +27,8 @@ export PYTHONPATH="$PYTHONPATH:$HOME/code/:$HOME/.pyenv/"
 export ARDUINO_LIB=$HOME/Arduino/libraries/
 export ARDUINO_PKG=$HOME/.arduino15/packages/
 
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+
 # rustup shell setup
 . $HOME/.cargo/env
 
@@ -34,15 +36,19 @@ export ARDUINO_PKG=$HOME/.arduino15/packages/
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# conda setup
-__conda_setup="$('$HOME/.local/share/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/.local/share/anaconda/etc/profile.d/conda.sh" ]; then
-        . "$HOME/.local/share/anaconda/etc/profile.d/conda.sh"
+# conda setup (lazy-loaded on first call)
+conda() {
+    unfunction conda
+    __conda_setup="$('$HOME/.local/share/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="$HOME/.local/share/anaconda/bin:$PATH"
+        if [ -f "$HOME/.local/share/anaconda/etc/profile.d/conda.sh" ]; then
+            . "$HOME/.local/share/anaconda/etc/profile.d/conda.sh"
+        else
+            export PATH="$HOME/.local/share/anaconda/bin:$PATH"
+        fi
     fi
-fi
-unset __conda_setup
+    unset __conda_setup
+    conda "$@"
+}
