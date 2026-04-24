@@ -12,4 +12,7 @@ path+=(/opt/flutter/bin)
 path+=($HOME/.dotnet/tools)
 path+=($HOME/.local/share/nvim/mason/bin)
 
+export TEXMFHOME="$HOME/.local/share/texmf"
+export CUPS_SERVERROOT="$HOME/.local/share/cups"
+
 export PATH
