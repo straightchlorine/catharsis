@@ -8,6 +8,8 @@ alias cd="z"
 alias rzsh="source $HOME/.config/zsh/.zshrc"
 alias nsnetwork="sudo ss -tup"
 
+alias immich="immich-go"
+
 # --- file system ---
 alias ls='eza -al --color=always --group-directories-first'
 alias ll='eza -l --color=always --group-directories-first'
@@ -79,6 +81,63 @@ alias aclili="arduino-cli lib install"
 alias aclils="arduino-cli lib search"
 alias aclinodemcu="arduino-cli board attach -b esp8266:esp8266:nodemcu -p"
 
+# --- kubernetes ---
+alias k="kubectl"
+alias kg="kubectl get"
+alias kgp="kubectl get pods"
+alias kga="kubectl get all"
+alias kgn="kubectl get namespaces"
+alias kd="kubectl describe"
+alias kdp="kubectl describe pod"
+alias kl="kubectl logs"
+alias klf="kubectl logs -f"
+alias ke="kubectl exec -it"
+alias kns="kubectl config set-context --current --namespace"
+alias kctx="kubectl config current-context"
+alias kaf="kubectl apply -f"
+alias kdf="kubectl delete -f"
+alias ktp="kubectl top pods"
+alias ktn="kubectl top nodes"
+
+# --- sealed secrets ---
+alias kseal="kubeseal --cert=\$HOME/code/fleet/.sealed-secrets-cert.pem -o yaml"
+alias kseal-secret='f() { kubectl create secret generic "$1" --namespace="$2" --dry-run=client -o yaml "${@:3}" | kseal; }; f'
+alias kseal-literal='f() { kubectl create secret generic "$1" --namespace="$2" --from-literal="$3"="$4" --dry-run=client -o yaml | kseal; }; f'
+alias kseal-file='f() { kubectl create secret generic "$1" --namespace="$2" --from-file="$3" --dry-run=client -o yaml | kseal; }; f'
+
+# --- restic ---
+# define <NAME>_RESTIC_REPOSITORY and <NAME>_RESTIC_PASSWORD_FILE per device
+# (e.g. AUTOMATION_*, DNS_*, MUSIC_*, STATION_*) in keys.zsh, then:
+#   switch-restic dns    # sets RESTIC_REPOSITORY/RESTIC_PASSWORD_FILE
+#   switch-restic        # lists available profiles and the current one
+switch-restic() {
+    if [[ -z "$1" ]]; then
+        print "current:"
+        print "  RESTIC_REPOSITORY=${RESTIC_REPOSITORY:-<unset>}"
+        print "  RESTIC_PASSWORD_FILE=${RESTIC_PASSWORD_FILE:-<unset>}"
+        print "available:"
+        local v
+        for v in ${(k)parameters}; do
+            [[ "$v" == *_RESTIC_REPOSITORY ]] && print "  ${(L)v%_RESTIC_REPOSITORY}"
+        done
+        return 0
+    fi
+    local name="${(U)1}"
+    local repo_var="${name}_RESTIC_REPOSITORY"
+    local pwd_var="${name}_RESTIC_PASSWORD_FILE"
+    if [[ -z "${(P)repo_var}" ]]; then
+        print "no ${repo_var} defined" >&2
+        return 1
+    fi
+    if [[ -z "${(P)pwd_var}" ]]; then
+        print "no ${pwd_var} defined" >&2
+        return 1
+    fi
+    export RESTIC_REPOSITORY="${(P)repo_var}"
+    export RESTIC_PASSWORD_FILE="${(P)pwd_var}"
+    print "restic: ${(L)name} -> $RESTIC_REPOSITORY"
+}
+
 # --- printing ---
 alias lph="lp -o media=A4 -o quality=high -o color"
 
@@ -90,25 +149,25 @@ alias tlmgr="tlmgr --usermode"
 
 # --- arch ---
 if [[ -f /etc/arch-release ]]; then
-  alias pac="sudo pacman -S"
-  alias pacu="sudo pacman -Syu"
-  alias pacr="sudo pacman -Rns"
-  alias pacq="pacman -Qs"
-  alias pacs="pacman -Ss"
-  alias mirrors="sudo reflector -c poland -c germany -l 20 -p https --age 12 --sort rate --save /etc/pacman.d/mirrorlist"
+    alias pac="sudo pacman -S"
+    alias pacu="sudo pacman -Syu"
+    alias pacr="sudo pacman -Rns"
+    alias pacq="pacman -Qs"
+    alias pacs="pacman -Ss"
+    alias mirrors="sudo reflector -c poland -c germany -l 20 -p https --age 12 --sort rate --save /etc/pacman.d/mirrorlist"
 fi
 
 # --- gentoo ---
 if [[ -f /etc/gentoo-release ]]; then
-  alias conn_tailscale="sudo rc-service tailscale start && sudo tailscale up --accept-routes"
-  alias disconn_tailscale="sudo tailscale down && sudo rc-service tailscale stop"
-  alias gupd='sudo emaint --auto sync && sudo emerge --ask --update --deep --newuse --backtrack=100 @world'
-  alias gpreb='sudo emerge --ask @preserved-rebuild'
-  alias gcfg='sudo dispatch-conf'
-  alias gup='sudo emerge --ask --depclean && sudo eclean-dist --deep'
-  alias gseq='echo "1. gupd  2. gpreb (if needed)  3. perl-cleaner/python-updater (if needed)  4. gcfg  5. gup"'
-  alias prog='genlop -c'
-  alias glog='genlop -l | tail -20'
-  alias gnews='eselect news read'
-  alias gone='sudo emerge --ask --oneshot'
+    alias conn_tailscale="sudo rc-service tailscale start && sudo tailscale up --accept-routes"
+    alias disconn_tailscale="sudo tailscale down && sudo rc-service tailscale stop"
+    alias gupd='sudo emaint --auto sync && sudo emerge --ask --update --deep --newuse --backtrack=100 @world'
+    alias gpreb='sudo emerge --ask @preserved-rebuild'
+    alias gcfg='sudo dispatch-conf'
+    alias gup='sudo emerge --ask --depclean && sudo eclean-dist --deep'
+    alias gseq='echo "1. gupd  2. gpreb (if needed)  3. perl-cleaner/python-updater (if needed)  4. gcfg  5. gup"'
+    alias prog='genlop -c'
+    alias glog='genlop -l | tail -20'
+    alias gnews='eselect news read'
+    alias gone='sudo emerge --ask --oneshot'
 fi
