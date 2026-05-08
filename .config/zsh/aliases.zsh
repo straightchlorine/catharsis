@@ -10,6 +10,20 @@ alias nsnetwork="sudo ss -tup"
 
 alias immich="immich-go"
 
+nivtime() {
+    local n="${1:-75}"
+    local dir="/data/vault/backup/music/ripped/NIV"
+    local total=0 count=0 dur
+    for f in "$dir"/*.mp3; do
+        [[ $((++count)) -gt $n ]] && break
+        dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+        total=$(awk -v t="$total" -v d="$dur" 'BEGIN{print t+d}')
+    done
+    awk -v s="$total" -v n="$n" 'BEGIN{
+      printf "Files: %d\nTotal: %.0fs (%.1fm) = %dh%02dm\n", n, s, s/60, int(s/3600), int((s%3600)/60)
+    }'
+}
+
 # --- file system ---
 alias ls='eza -al --color=always --group-directories-first'
 alias ll='eza -l --color=always --group-directories-first'
