@@ -1,0 +1,5 @@
+# game mode
+mode "game" {
+    bindsym $mod+g mode "default"
+}
+bindsym $mod+g mode "game"
