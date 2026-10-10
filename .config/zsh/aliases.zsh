@@ -9,6 +9,12 @@ alias rzsh="source $HOME/.config/zsh/.zshrc"
 alias nsnetwork="sudo ss -tup"
 
 alias immich="immich-go"
+alias ntfy="kubectl -n ntfy exec -it deploy/ntfy -- ntfy"
+alias headscale="kubectl -n headscale exec -it deploy/headscale -- headscale"
+alias headroom="kubectl --context admin@cm4-talos -n headroom exec -it deploy/headroom -- headroom"
+alias headroom-backup="kubectl -n headroom exec deploy/headroom -- tar cf - -C /state . | tar xf - -C ~/headroom-state-backup"
+alias headroom-logs="kubectl -n headroom exec deploy/headroom -- du -sh /state/.headroom/logs"
+alias headroom-prune="kubectl -n headroom exec deploy/headroom -- sh -c 'rm -f /state/.headroom/logs/*.log.[2-5]'"
 
 nivtime() {
     local n="${1:-75}"

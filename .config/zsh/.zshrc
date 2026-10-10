@@ -19,6 +19,8 @@ source $ZDOTDIR/dev.zsh
 source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/plugins.zsh
 
+source /usr/share/nvm/init-nvm.sh
+
 # bun completions
 [ -s "/home/zweiss/.bun/_bun" ] && source "/home/zweiss/.bun/_bun"
 
@@ -34,62 +36,62 @@ zstyle ':omz:plugins:alias-finder' longer yes
 zstyle ':omz:plugins:alias-finder' cheaper yes
 
 plugins=(
-  alias-finder
-  aliases
-  ansible
-  archlinux
-  arduino-cli
-  aws
-  azure
-  bazel
-  bgnotify
-  branch
-  catimg
-  colored-man-pages
-  colorize
-  command-not-found
-  conda
-  conda-env
-  copybuffer
-  copyfile
-  copypath
-  dbt
-  dnote
-  docker-compose
-  docker
-  dotenv
-  encode64
-  eza
-  fasd
-  fzf
-  fzf-tab
-  gcloud
-  genpass
-  git-lfs
-  git-prompt
-  git
-  gradle
-  helm
-  heroku
-  jira
-  k9s
-  kitty
-  kubectl
-  pip
-  rust
-  safe-paste
-  scala
-  sudo
-  terraform
-  tailscale
-  systemd
-  tmux
-  vi-mode
-  vscode
-  virtualenv
-  zoxide
-  zsh-autosuggestions
-  fast-syntax-highlighting
+    alias-finder
+    aliases
+    ansible
+    archlinux
+    arduino-cli
+    aws
+    azure
+    bazel
+    bgnotify
+    branch
+    catimg
+    colored-man-pages
+    colorize
+    command-not-found
+    conda
+    conda-env
+    copybuffer
+    copyfile
+    copypath
+    dbt
+    dnote
+    docker-compose
+    docker
+    dotenv
+    encode64
+    eza
+    fasd
+    fzf
+    fzf-tab
+    gcloud
+    genpass
+    git-lfs
+    git-prompt
+    git
+    gradle
+    helm
+    heroku
+    jira
+    k9s
+    kitty
+    kubectl
+    pip
+    rust
+    safe-paste
+    scala
+    sudo
+    terraform
+    tailscale
+    systemd
+    tmux
+    vi-mode
+    vscode
+    virtualenv
+    zoxide
+    zsh-autosuggestions
+    fast-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh

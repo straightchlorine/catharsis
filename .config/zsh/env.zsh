@@ -1,7 +1,6 @@
 export MOZ_ENABLE_WAYLAND=1
 
 export TERMINAL="kitty"
-export TERM="xterm-256color"
 
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
@@ -31,6 +30,9 @@ export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 # rustup shell setup
 . $HOME/.cargo/env
+
+# vite+ bin
+. "$HOME/.vite-plus/env"
 
 # pyenv setup
 eval "$(pyenv init -)"
