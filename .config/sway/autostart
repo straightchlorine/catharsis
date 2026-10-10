@@ -23,10 +23,14 @@ exec_always --no-startup-id dunst
 
 # screen locking
 exec swayidle -w \
-    timeout 300 'waylock -f -c 000000' \
+    timeout 300 'waylock -fork-on-lock -init-color 0x000000' \
     timeout 600 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"' \
-    before-sleep 'waylock -f -c 000000'
+    before-sleep 'waylock -fork-on-lock -init-color 0x000000'
+
+# internal panel off while the lid is closed (logind ignores the lid on purpose)
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
 
 # network applet
 exec nm-applet --indicator
